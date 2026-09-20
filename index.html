@@ -80,8 +80,8 @@ table{width:100%;border-collapse:collapse;font-size:12px}th,td{border-bottom:1px
 </section>
 
 <section id="share" class="page" style="padding:20px">
-  <h2>🔗 Kongsi Link Pendaftaran PGSHC</h2>
-  <p>Gunakan link ini untuk dikongsi kepada ibu bapa, penjaga dan penyokong PGSHC.</p>
+  <h2>🔗 Kongsi Link Pendaftaran STAND HC</h2>
+  <p>Gunakan link ini untuk dikongsi kepada ibu bapa, penjaga dan penyokong STAND HC.</p>
   <input id="shareUrl" type="text" readonly style="width:100%;padding:10px;box-sizing:border-box">
   <div style="margin-top:12px">
     <button onclick="copyShareLink()">📋 Salin Link</button>
@@ -116,7 +116,7 @@ render();
 function shareRegistration(){ if(typeof show==='function') show('share'); updateShare(); }
 function updateShare(){const e=document.getElementById('shareUrl');if(e)e.value=location.href;}
 async function copyShareLink(){const u=document.getElementById('shareUrl')?.value||location.href;try{await navigator.clipboard.writeText(u);alert('Link pendaftaran telah disalin.')}catch(e){const x=document.getElementById('shareUrl');if(x){x.select();document.execCommand('copy');alert('Link pendaftaran telah disalin.')}}}
-async function nativeShare(){const u=document.getElementById('shareUrl')?.value||location.href;if(navigator.share){try{await navigator.share({title:'Pendaftaran Keahlian PGSHC',text:'Jemput mendaftar sebagai Ibu Bapa/Penjaga atau Penyokong PGSHC.',url:u})}catch(e){}}else copyShareLink();}
-function whatsappShare(){const u=document.getElementById('shareUrl')?.value||location.href;const m='📢 *PENDAFTARAN KEAHLIAN PGSHC*\n\nPasir Gudang Stand Handball Club (PGSHC) membuka pendaftaran keahlian Ibu Bapa/Penjaga & Penyokong.\n\n🔗 Link pendaftaran:\n'+u;window.open('https://wa.me/?text='+encodeURIComponent(m),'_blank');}
+async function nativeShare(){const u=document.getElementById('shareUrl')?.value||location.href;if(navigator.share){try{await navigator.share({title:'Pendaftaran Keahlian STAND HC',text:'Jemput mendaftar sebagai Ibu Bapa/Penjaga atau Penyokong STAND HC.',url:u})}catch(e){}}else copyShareLink();}
+function whatsappShare(){const u=document.getElementById('shareUrl')?.value||location.href;const m='📢 *PENDAFTARAN KEAHLIAN STAND HC*\n\n Stand Handball Club (STAND HC) membuka pendaftaran keahlian Ibu Bapa/Penjaga & Penyokong.\n\n🔗 Link pendaftaran:\n'+u;window.open('https://wa.me/?text='+encodeURIComponent(m),'_blank');}
 </script>
 </body></html>
