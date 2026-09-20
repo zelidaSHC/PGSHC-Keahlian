@@ -1,122 +1,1643 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ms">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#063b88"><title>STAND HC Membership</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>STAND HC - Sistem Pendaftaran Keahlian</title>
+
 <style>
-*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f4f7fb;color:#182334}
-header{background:linear-gradient(135deg,#063b88,#0b75dc);color:white;padding:20px 16px;text-align:center}
-header h1{font-size:21px;margin:0}header p{margin:6px 0;font-size:13px}
-nav{display:flex;gap:6px;overflow:auto;background:white;padding:8px;position:sticky;top:0;z-index:5;box-shadow:0 2px 10px #0001}
-nav button{white-space:nowrap;background:#eef4ff;color:#063b88;border:0;padding:10px 13px;border-radius:9px;font-weight:bold}
-nav button.active{background:#063b88;color:#fff}
-main{max-width:850px;margin:auto;padding:15px}.page{display:none}.page.active{display:block}
-.card{background:#fff;border-radius:15px;padding:18px;margin-bottom:14px;box-shadow:0 4px 16px #0000000d}
-h2{font-size:18px;color:#063b88;margin:0 0 14px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:11px}.full{grid-column:1/-1}
-label{display:block;font-weight:bold;font-size:13px;margin:9px 0 5px}
-input,select,textarea{width:100%;padding:11px;border:1px solid #ccd6e3;border-radius:8px;font-size:14px}textarea{min-height:75px}
-.choice{display:flex;align-items:center;gap:9px;border:1px solid #dbe3ee;padding:11px;border-radius:8px;margin:6px 0}.choice input{width:auto}
-button.primary{width:100%;background:#0b65d8;color:white;border:0;border-radius:9px;padding:13px;font-weight:bold;font-size:15px}
-button.secondary{background:#eaf2ff;color:#063b88;border:0;border-radius:9px;padding:11px;font-weight:bold}
-.actions{display:grid;grid-template-columns:1fr 1fr;gap:9px}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-.stat{background:#fff;border-radius:13px;padding:15px;text-align:center;box-shadow:0 3px 12px #0001}.stat b{font-size:25px;color:#063b88;display:block}
-.badge{display:inline-block;padding:5px 8px;border-radius:20px;background:#eef4ff;color:#063b88;font-size:12px;font-weight:bold}
-table{width:100%;border-collapse:collapse;font-size:12px}th,td{border-bottom:1px solid #e5eaf0;padding:8px;text-align:left}th{background:#f5f8fc}
-.notice{padding:12px;border-radius:9px;background:#fff8db;color:#765c00;font-size:13px;line-height:1.45}
-.success{background:#dcfce7;color:#166534;padding:12px;border-radius:9px;margin-bottom:12px;display:none}
-.danger{color:#991b1b;background:#fee2e2;border:0;border-radius:8px;padding:8px}
-.small{font-size:12px;color:#667085;line-height:1.5}
-@media(max-width:650px){.grid{grid-template-columns:1fr}.full{grid-column:auto}.stats{grid-template-columns:1fr 1fr}.actions{grid-template-columns:1fr}}
-@media print{nav,.no-print,header{display:none!important}.page{display:block!important}body{background:white}.card{box-shadow:none}}
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:#f4f6f8;
+  color:#222;
+}
+
+header{
+  background:#111827;
+  color:#fff;
+  padding:22px 15px;
+  text-align:center;
+}
+
+header h1{
+  margin:0;
+  font-size:25px;
+}
+
+header p{
+  margin:7px 0 0;
+}
+
+nav{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:8px;
+  background:#fff;
+  padding:10px;
+  box-shadow:0 2px 6px rgba(0,0,0,.08);
+  position:sticky;
+  top:0;
+  z-index:10;
+}
+
+nav button{
+  border:0;
+  padding:10px 15px;
+  border-radius:8px;
+  background:#e5e7eb;
+  cursor:pointer;
+  font-weight:bold;
+}
+
+nav button.active{
+  background:#111827;
+  color:#fff;
+}
+
+.container{
+  max-width:1000px;
+  margin:25px auto;
+  padding:0 15px;
+}
+
+.card{
+  background:#fff;
+  border-radius:12px;
+  padding:22px;
+  margin-bottom:20px;
+  box-shadow:0 3px 12px rgba(0,0,0,.08);
+}
+
+.card h2{
+  margin-top:0;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:15px;
+}
+
+.field{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+
+.field.full{
+  grid-column:1/-1;
+}
+
+label{
+  font-weight:bold;
+  font-size:14px;
+}
+
+input,
+textarea,
+select{
+  width:100%;
+  padding:11px;
+  border:1px solid #d1d5db;
+  border-radius:8px;
+  font-size:15px;
+}
+
+textarea{
+  min-height:90px;
+  resize:vertical;
+}
+
+button{
+  cursor:pointer;
+}
+
+.action-row{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:20px;
+}
+
+.action-row button{
+  border:0;
+  padding:11px 18px;
+  border-radius:8px;
+  font-weight:bold;
+  background:#e5e7eb;
+}
+
+button.primary{
+  background:#111827;
+  color:#fff;
+}
+
+button.success{
+  background:#15803d;
+  color:#fff;
+}
+
+button.danger{
+  background:#dc2626;
+  color:#fff;
+}
+
+.notice{
+  padding:14px;
+  border-radius:8px;
+  background:#eff6ff;
+  border:1px solid #bfdbfe;
+  margin-bottom:15px;
+}
+
+.success-box{
+  padding:15px;
+  border-radius:8px;
+  background:#ecfdf5;
+  border:1px solid #86efac;
+  color:#166534;
+  margin-bottom:15px;
+}
+
+.error-box{
+  padding:15px;
+  border-radius:8px;
+  background:#fef2f2;
+  border:1px solid #fecaca;
+  color:#991b1b;
+  margin-bottom:15px;
+}
+
+.stat-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:15px;
+}
+
+.stat{
+  background:#f9fafb;
+  border:1px solid #e5e7eb;
+  border-radius:10px;
+  padding:18px;
+  text-align:center;
+}
+
+.stat strong{
+  display:block;
+  font-size:28px;
+  margin-top:5px;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  margin-top:15px;
+}
+
+th,td{
+  padding:10px;
+  border-bottom:1px solid #e5e7eb;
+  text-align:left;
+  font-size:14px;
+}
+
+th{
+  background:#f3f4f6;
+}
+
+.qr-box{
+  border:2px dashed #d1d5db;
+  border-radius:10px;
+  padding:25px;
+  text-align:center;
+  margin-top:15px;
+  word-break:break-word;
+}
+
+footer{
+  text-align:center;
+  color:#6b7280;
+  padding:30px 15px;
+  font-size:13px;
+}
+
+.hidden{
+  display:none!important;
+}
+
+@media(max-width:700px){
+  .grid,
+  .stat-grid{
+    grid-template-columns:1fr;
+  }
+
+  header h1{
+    font-size:20px;
+  }
+
+  .card{
+    padding:17px;
+  }
+
+  table{
+    display:block;
+    overflow-x:auto;
+    white-space:nowrap;
+  }
+}
 </style>
 </head>
+
 <body>
-<header><h1>STAND HANDBALL CLUB (STAND HC)</h1><p>Sistem Pendaftaran Keahlian </p></header>
+
+<header>
+  <h1>STAND HANDBALL CLUB (STAND HC)</h1>
+  <p>Sistem Pendaftaran Keahlian</p>
+</header>
+
 <nav>
-<button class="active" onclick="show('register',this)">Daftar Ahli</button>
-<button onclick="show('dashboard',this)">Dashboard Ahli</button>
-<button onclick="show('settings',this)">Tetapan</button>
-<button onclick="shareRegistration()">🔗 Share Link</button></nav>
-<main>
-<section id="register" class="page active">
-<div id="success" class="success"></div>
-<div class="card"><h2>A. Maklumat Ahli</h2><div class="grid">
-<div class="full"><label>Nama Penuh *</label><input id="nama"></div>
-<div><label>No. Kad Pengenalan / Dokumen *</label><input id="ic"></div>
-<div><label>No. Telefon *</label><input id="telefon"></div>
-<div><label>E-mel</label><input id="email" type="email"></div>
-<div class="full"><label>Alamat</label><textarea id="alamat"></textarea></div>
-</div></div>
-<div class="card"><h2>B. Kategori Keahlian</h2>
-<label class="choice"><input type="radio" name="kat" value="Ahli Ibu Bapa / Penjaga"> Ahli Ibu Bapa / Penjaga</label>
-<label class="choice"><input type="radio" name="kat" value="Ahli Penyokong"> Ahli Penyokong</label></div>
-<div class="card"><h2>C. Maklumat Anak / Pemain (Jika Berkaitan)</h2><div class="grid">
-<div class="full"><label>Nama Anak / Pemain</label><input id="anak"></div>
-<div><label>Sekolah</label><input id="sekolah"></div>
-<div><label>Kategori</label><input id="katAnak" placeholder="U12 / U15 / U18"></div>
-<div><label>Jantina</label><select id="jantina"><option></option><option>Lelaki</option><option>Perempuan</option></select></div>
-</div></div>
-<div class="card"><h2>D. Pengakuan & Persetujuan</h2>
-<p class="small">Saya dengan ini memohon untuk menjadi ahli STAND Handball Club (STAND HC) sebagai Ibu Bapa/Penjaga atau Penyokong. Saya bersetuju untuk menyokong objektif dan aktiviti kelab, khususnya pembangunan sukan bola baling lelaki dan perempuan U18 dan ke bawah. Saya juga bersetuju mematuhi perlembagaan, peraturan dan keputusan rasmi kelab.</p>
-<label class="choice"><input id="setuju" type="checkbox"> Saya bersetuju dengan pengakuan di atas. *</label>
-<button class="primary" onclick="submitMember()">HANTAR PENDAFTARAN</button></div>
+  <button class="active" onclick="show('register',this)">
+    Pendaftaran
+  </button>
+
+  <button onclick="show('dashboard',this)">
+    Dashboard Ahli
+  </button>
+
+  <button onclick="show('share',this)">
+    Kongsi Pendaftaran
+  </button>
+
+  <button onclick="show('settings',this)">
+    Tetapan
+  </button>
+</nav>
+
+<div class="container">
+
+<!-- =========================
+     PENDAFTARAN
+========================= -->
+
+<section id="register" class="page">
+
+<div class="card">
+
+<h2>Borang Keahlian STAND HC</h2>
+
+<div class="notice">
+Borang ini digunakan untuk pendaftaran Ahli Ibu Bapa / Penjaga
+dan Ahli Penyokong bagi menyokong pembangunan bola baling
+lelaki dan perempuan U18 dan ke bawah.
+</div>
+
+<div id="message"></div>
+
+<form id="memberForm">
+
+<h3>A. Maklumat Ahli</h3>
+
+<div class="grid">
+
+<div class="field">
+<label>Nama Penuh *</label>
+<input type="text" id="nama" required>
+</div>
+
+<div class="field">
+<label>No. Kad Pengenalan / Dokumen Pengenalan *</label>
+<input type="text" id="ic" required>
+</div>
+
+<div class="field">
+<label>No. Telefon *</label>
+<input type="tel" id="telefon" required>
+</div>
+
+<div class="field">
+<label>E-mel</label>
+<input type="email" id="email">
+</div>
+
+<div class="field full">
+<label>Alamat</label>
+<textarea id="alamat"></textarea>
+</div>
+
+</div>
+
+<h3>B. Kategori Keahlian</h3>
+
+<div class="grid">
+
+<div class="field">
+
+<label>Kategori *</label>
+
+<select id="kategori" required>
+
+<option value="">
+-- Pilih Kategori --
+</option>
+
+<option value="Ahli Ibu Bapa / Penjaga">
+Ahli Ibu Bapa / Penjaga
+</option>
+
+<option value="Ahli Penyokong">
+Ahli Penyokong
+</option>
+
+</select>
+
+</div>
+
+</div>
+
+<h3>C. Maklumat Anak / Pemain (Jika Berkaitan)</h3>
+
+<div class="grid">
+
+<div class="field">
+<label>Nama Anak / Pemain</label>
+<input type="text" id="anak">
+</div>
+
+<div class="field">
+<label>Sekolah</label>
+<input type="text" id="sekolah">
+</div>
+
+<div class="field">
+<label>Kategori</label>
+
+<select id="kategoriAnak">
+
+<option value="">
+-- Pilih --
+</option>
+
+<option value="U12">U12</option>
+<option value="U14">U14</option>
+<option value="U16">U16</option>
+<option value="U18">U18</option>
+<option value="Lain-lain">Lain-lain</option>
+
+</select>
+
+</div>
+
+<div class="field">
+
+<label>Jantina</label>
+
+<select id="jantina">
+
+<option value="">
+-- Pilih --
+</option>
+
+<option value="Lelaki">
+Lelaki
+</option>
+
+<option value="Perempuan">
+Perempuan
+</option>
+
+</select>
+
+</div>
+
+</div>
+
+<h3>D. Pengakuan Ahli</h3>
+
+<div class="notice">
+
+Saya memohon untuk menjadi ahli
+<strong>STAND HANDBALL CLUB (STAND HC)</strong>
+sebagai Ahli Ibu Bapa / Penjaga atau Ahli Penyokong.
+
+<br><br>
+
+Saya menyokong objektif dan aktiviti kelab,
+khususnya pembangunan bola baling lelaki dan perempuan
+U18 dan ke bawah.
+
+<br><br>
+
+Saya bersetuju mematuhi perlembagaan, peraturan
+dan keputusan rasmi kelab.
+
+</div>
+
+<h3>E. Persetujuan</h3>
+
+<div class="field">
+
+<label>
+
+<input
+type="checkbox"
+id="agreement"
+required
+style="width:auto;"
+>
+
+Saya bersetuju dengan pengakuan dan persetujuan di atas.
+
+</label>
+
+</div>
+
+<div class="action-row">
+
+<button
+type="submit"
+class="primary"
+>
+Hantar Pendaftaran
+</button>
+
+<button
+type="button"
+onclick="resetForm()"
+>
+Reset
+</button>
+
+</div>
+
+</form>
+
+</div>
+
 </section>
 
-<section id="dashboard" class="page">
-<div class="stats"><div class="stat"><b id="total">0</b>Jumlah</div><div class="stat"><b id="parents">0</b>Ibu Bapa/Penjaga</div><div class="stat"><b id="supporters">0</b>Penyokong</div></div>
-<div class="card"><h2>Senarai Pendaftaran</h2><div class="actions no-print">
-<button class="secondary" onclick="exportCSV()">Export CSV</button><button class="secondary" onclick="window.print()">Cetak</button>
-</div><div style="overflow:auto;margin-top:12px"><table><thead><tr><th>No.</th><th>Nama</th><th>Kategori</th><th>Telefon</th><th>Status</th><th>Tarikh</th></tr></thead><tbody id="rows"></tbody></table></div></div>
+
+<!-- =========================
+     DASHBOARD
+========================= -->
+
+<section id="dashboard" class="page hidden">
+
+<div class="card">
+
+<h2>Dashboard Ahli STAND HC</h2>
+
+<div class="stat-grid">
+
+<div class="stat">
+Jumlah Pendaftaran
+<strong id="totalMembers">0</strong>
+</div>
+
+<div class="stat">
+Dalam Semakan
+<strong id="pendingMembers">0</strong>
+</div>
+
+<div class="stat">
+Diluluskan
+<strong id="approvedMembers">0</strong>
+</div>
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h3>Senarai Pendaftaran</h3>
+
+<div class="action-row">
+
+<button
+onclick="exportCSV()"
+class="success"
+>
+Export CSV
+</button>
+
+<button
+onclick="clearData()"
+class="danger"
+>
+Padam Data Peranti
+</button>
+
+</div>
+
+<div id="memberTable"></div>
+
+</div>
+
 </section>
 
-<section id="settings" class="page">
-<div class="card"><h2>Sambungan Google Sheets</h2>
-<p class="small">Masukkan URL Web App Google Apps Script yang telah diterbitkan untuk menghantar pendaftaran ke Google Sheets.</p>
-<label>Google Apps Script Web App URL</label><input id="endpoint" placeholder="https://script.google.com/macros/s/.../exec">
-<button class="primary" style="margin-top:10px" onclick="saveEndpoint()">SIMPAN URL</button>
-<p id="endpointStatus" class="small"></p></div>
-<div class="card"><h2>Pengurusan Data</h2><button class="danger" onclick="clearData()">Padam semua data tempatan</button></div>
-<div class="card"><h2>Status V2</h2><div class="notice">Tanpa URL Google Sheets, aplikasi masih boleh digunakan secara offline dan data disimpan pada pelayar peranti. Dengan URL Web App, setiap pendaftaran akan dihantar ke Google Sheets.</div></div>
+
+<!-- =========================
+     SHARE
+========================= -->
+
+<section id="share" class="page hidden">
+
+<div class="card">
+
+<h2>Kongsi Pendaftaran STAND HC</h2>
+
+<p>
+Gunakan pautan ini untuk berkongsi borang pendaftaran
+STAND Handball Club.
+</p>
+
+<div class="field">
+
+<label>Pautan Aplikasi</label>
+
+<input
+type="text"
+id="shareUrl"
+readonly
+>
+
+</div>
+
+<div class="action-row">
+
+<button
+onclick="copyShareLink()"
+class="primary"
+>
+Salin Pautan
+</button>
+
+<button
+onclick="nativeShare()"
+class="success"
+>
+Kongsi
+</button>
+
+</div>
+
+<div class="qr-box">
+
+<strong>QR Code</strong>
+
+<p>
+Pautan pendaftaran STAND HC:
+</p>
+
+<div id="qrPlaceholder"></div>
+
+</div>
+
+</div>
+
 </section>
 
-<section id="share" class="page" style="padding:20px">
-  <h2>🔗 Kongsi Link Pendaftaran STAND HC</h2>
-  <p>Gunakan link ini untuk dikongsi kepada ibu bapa, penjaga dan penyokong STAND HC.</p>
-  <input id="shareUrl" type="text" readonly style="width:100%;padding:10px;box-sizing:border-box">
-  <div style="margin-top:12px">
-    <button onclick="copyShareLink()">📋 Salin Link</button>
-    <button onclick="nativeShare()">📤 Kongsi</button>
-    <button onclick="whatsappShare()">💬 WhatsApp</button>
-  </div>
-  <div style="margin-top:20px;padding:18px;border:1px dashed #999;border-radius:10px;text-align:center">
-    <div style="font-size:42px">▦</div>
-    <strong>QR Code Pendaftaran</strong>
-    <p id="qrNote">QR Code boleh dijana menggunakan URL awam selepas aplikasi dihoskan.</p>
-  </div>
-  <p><strong>Nota:</strong> alamat <code>file://</code> hanya berfungsi pada peranti sendiri dan bukan link Internet awam.</p>
+
+<!-- =========================
+     SETTINGS
+========================= -->
+
+<section id="settings" class="page hidden">
+
+<div class="card">
+
+<h2>Tetapan STAND HC</h2>
+
+<div class="notice">
+
+Masukkan URL Google Apps Script Web App yang telah dibuat
+untuk menyimpan data pendaftaran ke Google Sheets.
+
+</div>
+
+<div id="settingsMessage"></div>
+
+<div class="field">
+
+<label>
+Google Apps Script Web App URL
+</label>
+
+<input
+type="url"
+id="endpoint"
+placeholder="https://script.google.com/macros/s/XXXXXXXX/exec"
+>
+
+</div>
+
+<div class="action-row">
+
+<button
+onclick="saveEndpoint()"
+class="primary"
+>
+Simpan Tetapan
+</button>
+
+<button
+onclick="testEndpoint()"
+class="success"
+>
+Semak URL
+</button>
+
+</div>
+
+</div>
+
 </section>
-</main>
+
+</div>
+
+
+<footer>
+
+<strong>STAND HANDBALL CLUB (STAND HC)</strong>
+<br>
+Sistem Pendaftaran Keahlian
+
+</footer>
+
+
 <script>
-const $=x=>document.getElementById(x);
-let members=JSON.parse(localStorage.getItem('standhc_members')||'[]');
-$('endpoint').value=localStorage.getItem('standhc_endpoint')||'';
-function show(id,btn){document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));$(id).classList.add('active');document.querySelectorAll('nav button').forEach(x=>x.classList.remove('active'));btn.classList.add('active');if(id==='dashboard')render()}
-function data(){const r=document.querySelector('input[name="kat"]:checked');return {nama:$('nama').value.trim(),ic:$('ic').value.trim(),telefon:$('telefon').value.trim(),email:$('email').value.trim(),alamat:$('alamat').value.trim(),kategori:r?r.value:'',anak:$('anak').value.trim(),sekolah:$('sekolah').value.trim(),kategoriAnak:$('katAnak').value.trim(),jantina:$('jantina').value,tarikh:new Date().toISOString().slice(0,10)}}
-async function submitMember(){const d=data();if(!d.nama||!d.ic||!d.telefon||!d.kategori||!$('setuju').checked){alert('Sila lengkapkan semua medan wajib dan persetujuan.');return}d.noPermohonan='PGSHC-'+new Date().getFullYear()+'-'+String(Date.now()).slice(-6);d.status='Dalam Semakan';members.push(d);localStorage.setItem('pgshc_v2_members',JSON.stringify(members));let sent=false,url=localStorage.getItem('pgshc_endpoint');if(url){try{await fetch(url,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain'},body:JSON.stringify(d)});sent=true}catch(e){}}$('success').style.display='block';$('success').innerHTML='Pendaftaran berjaya. No. permohonan: <b>'+d.noPermohonan+'</b>'+(sent?' • Data dihantar ke Google Sheets.':' • Disimpan pada peranti.');window.scrollTo({top:0,behavior:'smooth'});clearForm()}
-function clearForm(){['nama','ic','telefon','email','alamat','anak','sekolah','katAnak'].forEach(x=>$(x).value='');$('jantina').value='';$('setuju').checked=false;document.querySelectorAll('input[name="kat"]').forEach(x=>x.checked=false)}
-function render(){members=JSON.parse(localStorage.getItem('standhc_members')||'[]');$('total').textContent=members.length;$('parents').textContent=members.filter(x=>x.kategori.includes('Ibu')).length;$('supporters').textContent=members.filter(x=>x.kategori.includes('Penyokong')).length;$('rows').innerHTML=members.map((x,i)=>`<tr><td>${i+1}</td><td><b>${esc(x.nama)}</b><br><span class="small">${x.noPermohonan}</span></td><td><span class="badge">${esc(x.kategori)}</span></td><td>${esc(x.telefon)}</td><td>${esc(x.status)}</td><td>${x.tarikh}</td></tr>`).join('')}
-function esc(s){return String(s||'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
-function exportCSV(){if(!members.length){alert('Tiada data.');return}let keys=['noPermohonan','nama','ic','telefon','email','alamat','kategori','anak','sekolah','kategoriAnak','jantina','tarikh','status'];let q=v=>`"${String(v??'').replaceAll('"','""')}"`;let csv=[keys.join(','),...members.map(x=>keys.map(k=>q(x[k])).join(','))].join('\\n');let a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['\\ufeff'+csv],{type:'text/csv'}));a.download='STAND_HC_Keahlian.csv';a.click()}
-function saveEndpoint(){localStorage.setItem('pgshc_endpoint',$('endpoint').value.trim());$('endpointStatus').textContent='URL disimpan pada peranti ini.'}
-function clearData(){if(confirm('Padam semua data tempatan STAND HC?')){localStorage.removeItem('standhc_members');render()}}
+
+/* =====================================================
+   STAND HC CONFIGURATION
+===================================================== */
+
+const STORAGE_MEMBERS =
+'standhc_members';
+
+const STORAGE_ENDPOINT =
+'standhc_endpoint';
+
+
+/* =====================================================
+   HELPER
+===================================================== */
+
+function $(id){
+
+return document.getElementById(id);
+
+}
+
+
+/* =====================================================
+   PAGE NAVIGATION
+===================================================== */
+
+function show(pageId,btn){
+
+document
+.querySelectorAll('.page')
+.forEach(function(page){
+
+page.classList.add('hidden');
+
+});
+
+
+const page=$(pageId);
+
+if(page){
+
+page.classList.remove('hidden');
+
+}
+
+
+document
+.querySelectorAll('nav button')
+.forEach(function(button){
+
+button.classList.remove('active');
+
+});
+
+
+if(btn){
+
+btn.classList.add('active');
+
+}
+
+
+if(pageId==='dashboard'){
+
 render();
+
+}
+
+
+if(pageId==='share'){
+
+updateShare();
+
+}
+
+
+if(pageId==='settings'){
+
+loadSettings();
+
+}
+
+}
+
+
+/* =====================================================
+   GENERATE STAND HC APPLICATION NUMBER
+===================================================== */
+
+function generateApplicationNumber(){
+
+const year =
+new Date().getFullYear();
+
+const random =
+Math.floor(
+100000 +
+Math.random()*900000
+);
+
+return 'STANDHC-' +
+year +
+'-' +
+random;
+
+}
+
+
+/* =====================================================
+   GET MEMBERS
+===================================================== */
+
+function getMembers(){
+
+try{
+
+return JSON.parse(
+localStorage.getItem(
+STORAGE_MEMBERS
+) || '[]'
+);
+
+}catch(error){
+
+return [];
+
+}
+
+}
+
+
+/* =====================================================
+   SAVE MEMBERS
+===================================================== */
+
+function saveMembers(members){
+
+localStorage.setItem(
+STORAGE_MEMBERS,
+JSON.stringify(members)
+);
+
+}
+
+
+/* =====================================================
+   SUBMIT REGISTRATION
+===================================================== */
+
+$('memberForm').addEventListener(
+'submit',
+async function(event){
+
+event.preventDefault();
+
+
+const nama =
+$('nama').value.trim();
+
+const ic =
+$('ic').value.trim();
+
+const telefon =
+$('telefon').value.trim();
+
+const email =
+$('email').value.trim();
+
+const alamat =
+$('alamat').value.trim();
+
+const kategori =
+$('kategori').value;
+
+const anak =
+$('anak').value.trim();
+
+const sekolah =
+$('sekolah').value.trim();
+
+const kategoriAnak =
+$('kategoriAnak').value;
+
+const jantina =
+$('jantina').value;
+
+
+if(
+!nama ||
+!ic ||
+!telefon ||
+!kategori
+){
+
+showMessage(
+'Sila lengkapkan semua maklumat wajib.',
+'error'
+);
+
+return;
+
+}
+
+
+if(!$('agreement').checked){
+
+showMessage(
+'Sila tandakan persetujuan sebelum menghantar.',
+'error'
+);
+
+return;
+
+}
+
+
+const noPermohonan =
+generateApplicationNumber();
+
+
+const tarikh =
+new Date().toLocaleDateString(
+'ms-MY'
+);
+
+
+const data={
+
+noPermohonan:
+noPermohonan,
+
+nama:
+nama,
+
+ic:
+ic,
+
+telefon:
+telefon,
+
+email:
+email,
+
+alamat:
+alamat,
+
+kategori:
+kategori,
+
+anak:
+anak,
+
+sekolah:
+sekolah,
+
+kategoriAnak:
+kategoriAnak,
+
+jantina:
+jantina,
+
+tarikh:
+tarikh,
+
+status:
+'Dalam Semakan'
+
+};
+
+
+/* Simpan pada peranti */
+
+const members =
+getMembers();
+
+members.push(data);
+
+saveMembers(members);
+
+
+/* Hantar ke Google Sheets */
+
+const endpoint =
+localStorage.getItem(
+STORAGE_ENDPOINT
+);
+
+
+let sentToSheet=false;
+
+
+if(endpoint){
+
+try{
+
+await fetch(
+
+endpoint,
+
+{
+
+method:'POST',
+
+mode:'no-cors',
+
+headers:{
+'Content-Type':
+'text/plain;charset=utf-8'
+},
+
+body:
+JSON.stringify(data)
+
+}
+
+);
+
+sentToSheet=true;
+
+}catch(error){
+
+console.error(
+'Google Sheets error:',
+error
+);
+
+}
+
+}
+
+
+let message =
+'<div class="success-box">' +
+
+'<strong>Pendaftaran STAND HC berjaya.</strong>' +
+
+'<br><br>' +
+
+'No. permohonan: ' +
+
+'<strong>' +
+
+noPermohonan +
+
+'</strong>' +
+
+'<br>' +
+
+'Status: Dalam Semakan';
+
+
+if(sentToSheet){
+
+message +=
+'<br>Data dihantar ke Google Sheets.';
+
+}else{
+
+message +=
+'<br>Data disimpan pada peranti. Google Sheets belum ditetapkan.';
+
+}
+
+
+message +=
+'</div>';
+
+
+$('message').innerHTML =
+message;
+
+
+$('memberForm').reset();
+
+
+window.scrollTo({
+top:0,
+behavior:'smooth'
+});
+
+}
+);
+
+
+/* =====================================================
+   MESSAGE
+===================================================== */
+
+function showMessage(
+message,
+type
+){
+
+const className =
+type==='error'
+?
+'error-box'
+:
+'success-box';
+
+
+$('message').innerHTML=
+'<div class="'+
+className+
+'">'+
+message+
+'</div>';
+
+}
+
+
+/* =====================================================
+   RESET
+===================================================== */
+
+function resetForm(){
+
+$('memberForm').reset();
+
+$('message').innerHTML='';
+
+}
+
+
+/* =====================================================
+   DASHBOARD
+===================================================== */
+
+function render(){
+
+const members =
+getMembers();
+
+
+$('totalMembers').textContent =
+members.length;
+
+
+$('pendingMembers').textContent =
+members.filter(function(member){
+
+return member.status===
+'Dalam Semakan';
+
+}).length;
+
+
+$('approvedMembers').textContent =
+members.filter(function(member){
+
+return member.status===
+'Diluluskan';
+
+}).length;
+
+
+if(members.length===0){
+
+$('memberTable').innerHTML=
+'<p>Belum ada pendaftaran pada peranti ini.</p>';
+
+return;
+
+}
+
+
+let html='';
+
+html+=
+'<table>';
+
+html+=
+'<thead>';
+
+html+=
+'<tr>'+
+
+'<th>No. Permohonan</th>'+
+
+'<th>Nama</th>'+
+
+'<th>Telefon</th>'+
+
+'<th>Kategori</th>'+
+
+'<th>Anak / Pemain</th>'+
+
+'<th>Tarikh</th>'+
+
+'<th>Status</th>'+
+
+'</tr>';
+
+html+=
+'</thead>';
+
+html+=
+'<tbody>';
+
+
+members.forEach(function(member){
+
+html+=
+'<tr>'+
+
+'<td>'+
+escapeHTML(member.noPermohonan)+
+'</td>'+
+
+'<td>'+
+escapeHTML(member.nama)+
+'</td>'+
+
+'<td>'+
+escapeHTML(member.telefon)+
+'</td>'+
+
+'<td>'+
+escapeHTML(member.kategori)+
+'</td>'+
+
+'<td>'+
+escapeHTML(member.anak||'-')+
+'</td>'+
+
+'<td>'+
+escapeHTML(member.tarikh)+
+'</td>'+
+
+'<td>'+
+escapeHTML(member.status)+
+'</td>'+
+
+'</tr>';
+
+});
+
+
+html+=
+'</tbody>';
+
+html+=
+'</table>';
+
+
+$('memberTable').innerHTML=
+html;
+
+}
+
+
+/* =====================================================
+   ESCAPE HTML
+===================================================== */
+
+function escapeHTML(value){
+
+if(
+value===null ||
+value===undefined
+){
+
+return '';
+
+}
+
+
+return String(value)
+
+.replace(/&/g,'&amp;')
+
+.replace(/</g,'&lt;')
+
+.replace(/>/g,'&gt;')
+
+.replace(/"/g,'&quot;')
+
+.replace(/'/g,'&#039;');
+
+}
+
+
+/* =====================================================
+   EXPORT CSV
+===================================================== */
+
+function exportCSV(){
+
+const members =
+getMembers();
+
+
+if(members.length===0){
+
+alert(
+'Tiada data untuk dieksport.'
+);
+
+return;
+
+}
+
+
+const headers=[
+
+'No Permohonan',
+'Nama',
+'No IC/Dokumen',
+'Telefon',
+'E-mel',
+'Alamat',
+'Kategori',
+'Anak/Pemain',
+'Sekolah',
+'Kategori Anak',
+'Jantina',
+'Tarikh',
+'Status'
+
+];
+
+
+const rows =
+members.map(function(member){
+
+return [
+
+member.noPermohonan,
+member.nama,
+member.ic,
+member.telefon,
+member.email,
+member.alamat,
+member.kategori,
+member.anak,
+member.sekolah,
+member.kategoriAnak,
+member.jantina,
+member.tarikh,
+member.status
+
+];
+
+});
+
+
+const csvData =
+[headers]
+.concat(rows)
+.map(function(row){
+
+return row.map(function(value){
+
+return '"' +
+String(value||'')
+.replace(/"/g,'""')+
+'"';
+
+}).join(',');
+
+})
+.join('\n');
+
+
+const blob =
+new Blob(
+[csvData],
+{
+type:
+'text/csv;charset=utf-8;'
+}
+);
+
+
+const url =
+URL.createObjectURL(blob);
+
+
+const link =
+document.createElement('a');
+
+
+link.href=url;
+
+link.download=
+'STAND_HC_Keahlian.csv';
+
+
+document.body.appendChild(link);
+
+link.click();
+
+document.body.removeChild(link);
+
+URL.revokeObjectURL(url);
+
+}
+
+
+/* =====================================================
+   CLEAR DATA
+===================================================== */
+
+function clearData(){
+
+const confirmDelete =
+confirm(
+'Adakah anda pasti mahu memadam semua data pendaftaran STAND HC yang disimpan pada peranti ini?'
+);
+
+
+if(!confirmDelete){
+
+return;
+
+}
+
+
+localStorage.removeItem(
+STORAGE_MEMBERS
+);
+
+
+render();
+
+
+alert(
+'Data STAND HC pada peranti ini telah dipadam.'
+);
+
+}
+
+
+/* =====================================================
+   SETTINGS
+===================================================== */
+
+function loadSettings(){
+
+$('endpoint').value =
+localStorage.getItem(
+STORAGE_ENDPOINT
+)||'';
+
+}
+
+
+function saveEndpoint(){
+
+const endpoint =
+$('endpoint').value.trim();
+
+
+if(!endpoint){
+
+$('settingsMessage').innerHTML=
+'<div class="error-box">'+
+'Sila masukkan URL Google Apps Script Web App.'+
+'</div>';
+
+return;
+
+}
+
+
+if(
+endpoint.indexOf(
+'https://script.google.com/macros/s/'
+)!==0
+){
+
+$('settingsMessage').innerHTML=
+'<div class="error-box">'+
+'URL Google Apps Script tidak sah.'+
+'</div>';
+
+return;
+
+}
+
+
+localStorage.setItem(
+STORAGE_ENDPOINT,
+endpoint
+);
+
+
+$('settingsMessage').innerHTML=
+'<div class="success-box">'+
+'<strong>Tetapan STAND HC berjaya disimpan.</strong>'+
+'<br>'+
+'Pendaftaran baharu akan dihantar ke Google Sheets.'+
+'</div>';
+
+}
+
+
+function testEndpoint(){
+
+const endpoint =
+$('endpoint').value.trim();
+
+
+if(!endpoint){
+
+$('settingsMessage').innerHTML=
+'<div class="error-box">'+
+'Sila masukkan URL terlebih dahulu.'+
+'</div>';
+
+return;
+
+}
+
+
+if(
+endpoint.indexOf(
+'script.google.com/macros/s/'
+)===-1
+){
+
+$('settingsMessage').innerHTML=
+'<div class="error-box">'+
+'URL Google Apps Script tidak sah.'+
+'</div>';
+
+return;
+
+}
+
+
+$('settingsMessage').innerHTML=
+'<div class="success-box">'+
+'Format URL Google Apps Script STAND HC kelihatan betul.'+
+'</div>';
+
+}
+
+
+/* =====================================================
+   SHARE
+===================================================== */
+
+function updateShare(){
+
+const url=
+window.location.href;
+
+
+$('shareUrl').value=
+url;
+
+
+$('qrPlaceholder').innerHTML=
+'<strong>'+
+escapeHTML(url)+
+'</strong>';
+
+}
+
+
+function copyShareLink(){
+
+const url=
+window.location.href;
+
+
+if(
+navigator.clipboard &&
+navigator.clipboard.writeText
+){
+
+navigator.clipboard.writeText(
+url
+).then(function(){
+
+alert(
+'Pautan STAND HC berjaya disalin.'
+);
+
+}).catch(function(){
+
+fallbackCopy(url);
+
+});
+
+}else{
+
+fallbackCopy(url);
+
+}
+
+}
+
+
+function fallbackCopy(text){
+
+const input =
+document.createElement('input');
+
+input.value=text;
+
+document.body.appendChild(input);
+
+input.select();
+
+document.execCommand('copy');
+
+document.body.removeChild(input);
+
+alert(
+'Pautan STAND HC berjaya disalin.'
+);
+
+}
+
+
+function nativeShare(){
+
+const url=
+window.location.href;
+
+
+if(navigator.share){
+
+navigator.share({
+
+title:
+'STAND Handball Club',
+
+text:
+'Pendaftaran Keahlian STAND HC',
+
+url:
+url
+
+}).catch(function(){
+
+});
+
+}else{
+
+copyShareLink();
+
+}
+
+}
+
+
+/* =====================================================
+   INITIALIZE
+===================================================== */
+
+document.addEventListener(
+'DOMContentLoaded',
+function(){
+
+loadSettings();
+
+render();
+
+}
+);
+
 </script>
 
-<script>
-function shareRegistration(){ if(typeof show==='function') show('share'); updateShare(); }
-function updateShare(){const e=document.getElementById('shareUrl');if(e)e.value=location.href;}
-async function copyShareLink(){const u=document.getElementById('shareUrl')?.value||location.href;try{await navigator.clipboard.writeText(u);alert('Link pendaftaran telah disalin.')}catch(e){const x=document.getElementById('shareUrl');if(x){x.select();document.execCommand('copy');alert('Link pendaftaran telah disalin.')}}}
-async function nativeShare(){const u=document.getElementById('shareUrl')?.value||location.href;if(navigator.share){try{await navigator.share({title:'Pendaftaran Keahlian STAND HC',text:'Jemput mendaftar sebagai Ibu Bapa/Penjaga atau Penyokong STAND HC.',url:u})}catch(e){}}else copyShareLink();}
-function whatsappShare(){const u=document.getElementById('shareUrl')?.value||location.href;const m='📢 *PENDAFTARAN KEAHLIAN STAND HC*\n\nStand Handball Club (STAND HC) membuka pendaftaran keahlian Ibu Bapa/Penjaga & Penyokong.\n\n🔗 Link pendaftaran:\n'+u;window.open('https://wa.me/?text='+encodeURIComponent(m),'_blank');}
-</script>
-</body></html>
+</body>
+</html>
