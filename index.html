@@ -113,10 +113,6 @@ textarea{
   resize:vertical;
 }
 
-button{
-  cursor:pointer;
-}
-
 .action-row{
   display:flex;
   flex-wrap:wrap;
@@ -129,6 +125,7 @@ button{
   padding:11px 18px;
   border-radius:8px;
   font-weight:bold;
+  cursor:pointer;
   background:#e5e7eb;
 }
 
@@ -231,6 +228,7 @@ footer{
 }
 
 @media(max-width:700px){
+
   .grid,
   .stat-grid{
     grid-template-columns:1fr;
@@ -249,6 +247,7 @@ footer{
     overflow-x:auto;
     white-space:nowrap;
   }
+
 }
 </style>
 </head>
@@ -256,26 +255,28 @@ footer{
 <body>
 
 <header>
-  <h1>STAND HANDBALL CLUB (STAND HC)</h1>
-  <p>Sistem Pendaftaran Keahlian</p>
+<h1>STAND HANDBALL CLUB (STAND HC)</h1>
+<p>Sistem Pendaftaran Keahlian</p>
 </header>
 
 <nav>
-  <button class="active" onclick="show('register',this)">
-    Pendaftaran
-  </button>
 
-  <button onclick="show('dashboard',this)">
-    Dashboard Ahli
-  </button>
+<button class="active" onclick="show('register',this)">
+Pendaftaran
+</button>
 
-  <button onclick="show('share',this)">
-    Kongsi Pendaftaran
-  </button>
+<button onclick="show('dashboard',this)">
+Dashboard Ahli
+</button>
 
-  <button onclick="show('settings',this)">
-    Tetapan
-  </button>
+<button onclick="show('share',this)">
+Kongsi Pendaftaran
+</button>
+
+<button onclick="show('settings',this)">
+Tetapan
+</button>
+
 </nav>
 
 <div class="container">
@@ -374,14 +375,12 @@ Ahli Penyokong
 </div>
 
 <div class="field">
+
 <label>Kategori</label>
 
 <select id="kategoriAnak">
 
-<option value="">
--- Pilih --
-</option>
-
+<option value="">-- Pilih --</option>
 <option value="U12">U12</option>
 <option value="U14">U14</option>
 <option value="U16">U16</option>
@@ -398,17 +397,9 @@ Ahli Penyokong
 
 <select id="jantina">
 
-<option value="">
--- Pilih --
-</option>
-
-<option value="Lelaki">
-Lelaki
-</option>
-
-<option value="Perempuan">
-Perempuan
-</option>
+<option value="">-- Pilih --</option>
+<option value="Lelaki">Lelaki</option>
+<option value="Perempuan">Perempuan</option>
 
 </select>
 
@@ -458,17 +449,11 @@ Saya bersetuju dengan pengakuan dan persetujuan di atas.
 
 <div class="action-row">
 
-<button
-type="submit"
-class="primary"
->
+<button type="submit" class="primary">
 Hantar Pendaftaran
 </button>
 
-<button
-type="button"
-onclick="resetForm()"
->
+<button type="button" onclick="resetForm()">
 Reset
 </button>
 
@@ -512,24 +497,17 @@ Diluluskan
 
 </div>
 
-
 <div class="card">
 
 <h3>Senarai Pendaftaran</h3>
 
 <div class="action-row">
 
-<button
-onclick="exportCSV()"
-class="success"
->
+<button onclick="exportCSV()" class="success">
 Export CSV
 </button>
 
-<button
-onclick="clearData()"
-class="danger"
->
+<button onclick="clearData()" class="danger">
 Padam Data Peranti
 </button>
 
@@ -561,27 +539,17 @@ STAND Handball Club.
 
 <label>Pautan Aplikasi</label>
 
-<input
-type="text"
-id="shareUrl"
-readonly
->
+<input type="text" id="shareUrl" readonly>
 
 </div>
 
 <div class="action-row">
 
-<button
-onclick="copyShareLink()"
-class="primary"
->
+<button onclick="copyShareLink()" class="primary">
 Salin Pautan
 </button>
 
-<button
-onclick="nativeShare()"
-class="success"
->
+<button onclick="nativeShare()" class="success">
 Kongsi
 </button>
 
@@ -614,25 +582,22 @@ Pautan pendaftaran STAND HC:
 
 <h2>Tetapan STAND HC</h2>
 
-<div class="notice">
-
-Masukkan URL Google Apps Script Web App yang telah dibuat
-untuk menyimpan data pendaftaran ke Google Sheets.
-
+<div class="success-box">
+<strong>Google Sheets telah ditetapkan secara automatik.</strong>
+<br>
+Pengguna telefon lain tidak perlu memasukkan URL Google Apps Script.
 </div>
-
-<div id="settingsMessage"></div>
 
 <div class="field">
 
 <label>
-Google Apps Script Web App URL
+Google Apps Script Web App
 </label>
 
 <input
-type="url"
-id="endpoint"
-placeholder="https://script.google.com/macros/s/XXXXXXXX/exec"
+type="text"
+value="Disambungkan secara automatik"
+readonly
 >
 
 </div>
@@ -640,20 +605,15 @@ placeholder="https://script.google.com/macros/s/XXXXXXXX/exec"
 <div class="action-row">
 
 <button
-onclick="saveEndpoint()"
-class="primary"
->
-Simpan Tetapan
-</button>
-
-<button
-onclick="testEndpoint()"
+onclick="testConnection()"
 class="success"
 >
-Semak URL
+Semak Sambungan
 </button>
 
 </div>
+
+<div id="settingsMessage"></div>
 
 </div>
 
@@ -677,11 +637,11 @@ Sistem Pendaftaran Keahlian
    STAND HC CONFIGURATION
 ===================================================== */
 
+const GOOGLE_SCRIPT_URL =
+'https://script.google.com/macros/s/AKfycbxWp0fym_miAKrc6PJlCoohmWa8oivAWmx_eSwoYxZy051uB8VKID4hIbYK1fisY6gazg/exec';
+
 const STORAGE_MEMBERS =
 'standhc_members';
-
-const STORAGE_ENDPOINT =
-'standhc_endpoint';
 
 
 /* =====================================================
@@ -689,14 +649,12 @@ const STORAGE_ENDPOINT =
 ===================================================== */
 
 function $(id){
-
 return document.getElementById(id);
-
 }
 
 
 /* =====================================================
-   PAGE NAVIGATION
+   NAVIGATION
 ===================================================== */
 
 function show(pageId,btn){
@@ -704,62 +662,38 @@ function show(pageId,btn){
 document
 .querySelectorAll('.page')
 .forEach(function(page){
-
 page.classList.add('hidden');
-
 });
-
 
 const page=$(pageId);
 
 if(page){
-
 page.classList.remove('hidden');
-
 }
-
 
 document
 .querySelectorAll('nav button')
 .forEach(function(button){
-
 button.classList.remove('active');
-
 });
 
-
 if(btn){
-
 btn.classList.add('active');
-
 }
-
 
 if(pageId==='dashboard'){
-
 render();
-
 }
-
 
 if(pageId==='share'){
-
 updateShare();
-
-}
-
-
-if(pageId==='settings'){
-
-loadSettings();
-
 }
 
 }
 
 
 /* =====================================================
-   GENERATE STAND HC APPLICATION NUMBER
+   APPLICATION NUMBER
 ===================================================== */
 
 function generateApplicationNumber(){
@@ -782,7 +716,7 @@ random;
 
 
 /* =====================================================
-   GET MEMBERS
+   LOCAL DATA
 ===================================================== */
 
 function getMembers(){
@@ -804,10 +738,6 @@ return [];
 }
 
 
-/* =====================================================
-   SAVE MEMBERS
-===================================================== */
-
 function saveMembers(members){
 
 localStorage.setItem(
@@ -828,44 +758,19 @@ async function(event){
 
 event.preventDefault();
 
-
-const nama =
-$('nama').value.trim();
-
-const ic =
-$('ic').value.trim();
-
-const telefon =
-$('telefon').value.trim();
-
-const email =
-$('email').value.trim();
-
-const alamat =
-$('alamat').value.trim();
-
-const kategori =
-$('kategori').value;
-
-const anak =
-$('anak').value.trim();
-
-const sekolah =
-$('sekolah').value.trim();
-
-const kategoriAnak =
-$('kategoriAnak').value;
-
-const jantina =
-$('jantina').value;
+const nama=$('nama').value.trim();
+const ic=$('ic').value.trim();
+const telefon=$('telefon').value.trim();
+const email=$('email').value.trim();
+const alamat=$('alamat').value.trim();
+const kategori=$('kategori').value;
+const anak=$('anak').value.trim();
+const sekolah=$('sekolah').value.trim();
+const kategoriAnak=$('kategoriAnak').value;
+const jantina=$('jantina').value;
 
 
-if(
-!nama ||
-!ic ||
-!telefon ||
-!kategori
-){
+if(!nama || !ic || !telefon || !kategori){
 
 showMessage(
 'Sila lengkapkan semua maklumat wajib.',
@@ -892,85 +797,57 @@ return;
 const noPermohonan =
 generateApplicationNumber();
 
-
 const tarikh =
-new Date().toLocaleDateString(
-'ms-MY'
-);
+new Date().toLocaleDateString('ms-MY');
 
 
 const data={
 
-noPermohonan:
-noPermohonan,
+noPermohonan:noPermohonan,
 
-nama:
-nama,
+nama:nama,
 
-ic:
-ic,
+ic:ic,
 
-telefon:
-telefon,
+telefon:telefon,
 
-email:
-email,
+email:email,
 
-alamat:
-alamat,
+alamat:alamat,
 
-kategori:
-kategori,
+kategori:kategori,
 
-anak:
-anak,
+anak:anak,
 
-sekolah:
-sekolah,
+sekolah:sekolah,
 
-kategoriAnak:
-kategoriAnak,
+kategoriAnak:kategoriAnak,
 
-jantina:
-jantina,
+jantina:jantina,
 
-tarikh:
-tarikh,
+tarikh:tarikh,
 
-status:
-'Dalam Semakan'
+status:'Dalam Semakan'
 
 };
 
 
-/* Simpan pada peranti */
+/* Simpan salinan pada telefon */
 
-const members =
-getMembers();
+const members=getMembers();
 
 members.push(data);
 
 saveMembers(members);
 
 
-/* Hantar ke Google Sheets */
-
-const endpoint =
-localStorage.getItem(
-STORAGE_ENDPOINT
-);
-
-
-let sentToSheet=false;
-
-
-if(endpoint){
+/* Hantar terus ke Google Sheets */
 
 try{
 
 await fetch(
 
-endpoint,
+GOOGLE_SCRIPT_URL,
 
 {
 
@@ -990,59 +867,56 @@ JSON.stringify(data)
 
 );
 
-sentToSheet=true;
 
-}catch(error){
+$('message').innerHTML=
 
-console.error(
-'Google Sheets error:',
-error
-);
+'<div class="success-box">'+
 
-}
+'<strong>Pendaftaran STAND HC berjaya.</strong>'+
 
-}
+'<br><br>'+
 
+'No. permohonan: '+
+'<strong>'+
+noPermohonan+
+'</strong>'+
 
-let message =
-'<div class="success-box">' +
+'<br>'+
 
-'<strong>Pendaftaran STAND HC berjaya.</strong>' +
+'Status: Dalam Semakan'+
 
-'<br><br>' +
+'<br>'+
 
-'No. permohonan: ' +
+'<strong>Data telah dihantar ke Google Sheets.</strong>'+
 
-'<strong>' +
-
-noPermohonan +
-
-'</strong>' +
-
-'<br>' +
-
-'Status: Dalam Semakan';
-
-
-if(sentToSheet){
-
-message +=
-'<br>Data dihantar ke Google Sheets.';
-
-}else{
-
-message +=
-'<br>Data disimpan pada peranti. Google Sheets belum ditetapkan.';
-
-}
-
-
-message +=
 '</div>';
 
 
-$('message').innerHTML =
-message;
+}catch(error){
+
+console.error(error);
+
+
+$('message').innerHTML=
+
+'<div class="error-box">'+
+
+'<strong>Pendaftaran disimpan pada peranti.</strong>'+
+
+'<br><br>'+
+
+'No. permohonan: '+
+'<strong>'+
+noPermohonan+
+'</strong>'+
+
+'<br>'+
+
+'Data gagal dihantar ke Google Sheets.'+
+
+'</div>';
+
+}
 
 
 $('memberForm').reset();
@@ -1061,10 +935,7 @@ behavior:'smooth'
    MESSAGE
 ===================================================== */
 
-function showMessage(
-message,
-type
-){
+function showMessage(message,type){
 
 const className =
 type==='error'
@@ -1072,7 +943,6 @@ type==='error'
 'error-box'
 :
 'success-box';
-
 
 $('message').innerHTML=
 '<div class="'+
@@ -1103,15 +973,14 @@ $('message').innerHTML='';
 
 function render(){
 
-const members =
-getMembers();
+const members=getMembers();
 
 
-$('totalMembers').textContent =
+$('totalMembers').textContent=
 members.length;
 
 
-$('pendingMembers').textContent =
+$('pendingMembers').textContent=
 members.filter(function(member){
 
 return member.status===
@@ -1120,7 +989,7 @@ return member.status===
 }).length;
 
 
-$('approvedMembers').textContent =
+$('approvedMembers').textContent=
 members.filter(function(member){
 
 return member.status===
@@ -1139,38 +1008,22 @@ return;
 }
 
 
-let html='';
+let html='<table>';
 
 html+=
-'<table>';
-
-html+=
-'<thead>';
-
-html+=
-'<tr>'+
+'<thead><tr>'+
 
 '<th>No. Permohonan</th>'+
-
 '<th>Nama</th>'+
-
 '<th>Telefon</th>'+
-
 '<th>Kategori</th>'+
-
 '<th>Anak / Pemain</th>'+
-
 '<th>Tarikh</th>'+
-
 '<th>Status</th>'+
 
-'</tr>';
+'</tr></thead>';
 
-html+=
-'</thead>';
-
-html+=
-'<tbody>';
+html+='<tbody>';
 
 
 members.forEach(function(member){
@@ -1211,15 +1064,9 @@ escapeHTML(member.status)+
 });
 
 
-html+=
-'</tbody>';
+html+='</tbody></table>';
 
-html+=
-'</table>';
-
-
-$('memberTable').innerHTML=
-html;
+$('memberTable').innerHTML=html;
 
 }
 
@@ -1234,22 +1081,15 @@ if(
 value===null ||
 value===undefined
 ){
-
 return '';
-
 }
-
 
 return String(value)
 
 .replace(/&/g,'&amp;')
-
 .replace(/</g,'&lt;')
-
 .replace(/>/g,'&gt;')
-
 .replace(/"/g,'&quot;')
-
 .replace(/'/g,'&#039;');
 
 }
@@ -1261,8 +1101,7 @@ return String(value)
 
 function exportCSV(){
 
-const members =
-getMembers();
+const members=getMembers();
 
 
 if(members.length===0){
@@ -1295,7 +1134,7 @@ const headers=[
 ];
 
 
-const rows =
+const rows=
 members.map(function(member){
 
 return [
@@ -1319,7 +1158,7 @@ member.status
 });
 
 
-const csvData =
+const csvData=
 [headers]
 .concat(rows)
 .map(function(row){
@@ -1337,29 +1176,25 @@ String(value||'')
 .join('\n');
 
 
-const blob =
+const blob=
 new Blob(
 [csvData],
 {
-type:
-'text/csv;charset=utf-8;'
+type:'text/csv;charset=utf-8;'
 }
 );
 
 
-const url =
+const url=
 URL.createObjectURL(blob);
 
-
-const link =
+const link=
 document.createElement('a');
-
 
 link.href=url;
 
 link.download=
 'STAND_HC_Keahlian.csv';
-
 
 document.body.appendChild(link);
 
@@ -1373,21 +1208,19 @@ URL.revokeObjectURL(url);
 
 
 /* =====================================================
-   CLEAR DATA
+   CLEAR LOCAL DATA
 ===================================================== */
 
 function clearData(){
 
-const confirmDelete =
+const confirmDelete=
 confirm(
 'Adakah anda pasti mahu memadam semua data pendaftaran STAND HC yang disimpan pada peranti ini?'
 );
 
 
 if(!confirmDelete){
-
 return;
-
 }
 
 
@@ -1407,107 +1240,60 @@ alert(
 
 
 /* =====================================================
-   SETTINGS
+   TEST CONNECTION
 ===================================================== */
 
-function loadSettings(){
-
-$('endpoint').value =
-localStorage.getItem(
-STORAGE_ENDPOINT
-)||'';
-
-}
-
-
-function saveEndpoint(){
-
-const endpoint =
-$('endpoint').value.trim();
-
-
-if(!endpoint){
+async function testConnection(){
 
 $('settingsMessage').innerHTML=
-'<div class="error-box">'+
-'Sila masukkan URL Google Apps Script Web App.'+
+'<div class="notice">'+
+'Sedang menyemak sambungan...'+
 '</div>';
 
-return;
+
+try{
+
+await fetch(
+
+GOOGLE_SCRIPT_URL,
+
+{
+
+method:'POST',
+
+mode:'no-cors',
+
+headers:{
+'Content-Type':
+'text/plain;charset=utf-8'
+},
+
+body:JSON.stringify({
+
+test:'STAND HC connection'
+
+})
 
 }
 
-
-if(
-endpoint.indexOf(
-'https://script.google.com/macros/s/'
-)!==0
-){
-
-$('settingsMessage').innerHTML=
-'<div class="error-box">'+
-'URL Google Apps Script tidak sah.'+
-'</div>';
-
-return;
-
-}
-
-
-localStorage.setItem(
-STORAGE_ENDPOINT,
-endpoint
 );
 
 
 $('settingsMessage').innerHTML=
 '<div class="success-box">'+
-'<strong>Tetapan STAND HC berjaya disimpan.</strong>'+
+'<strong>Sambungan dihantar.</strong>'+
 '<br>'+
-'Pendaftaran baharu akan dihantar ke Google Sheets.'+
+'Google Apps Script telah menerima permintaan daripada aplikasi STAND HC.'+
 '</div>';
 
-}
-
-
-function testEndpoint(){
-
-const endpoint =
-$('endpoint').value.trim();
-
-
-if(!endpoint){
+}catch(error){
 
 $('settingsMessage').innerHTML=
 '<div class="error-box">'+
-'Sila masukkan URL terlebih dahulu.'+
+'Sambungan gagal dihantar.'+
 '</div>';
-
-return;
 
 }
-
-
-if(
-endpoint.indexOf(
-'script.google.com/macros/s/'
-)===-1
-){
-
-$('settingsMessage').innerHTML=
-'<div class="error-box">'+
-'URL Google Apps Script tidak sah.'+
-'</div>';
-
-return;
-
-}
-
-
-$('settingsMessage').innerHTML=
-'<div class="success-box">'+
-'Format URL Google Apps Script STAND HC kelihatan betul.'+
-'</div>';
 
 }
 
@@ -1521,10 +1307,7 @@ function updateShare(){
 const url=
 window.location.href;
 
-
-$('shareUrl').value=
-url;
-
+$('shareUrl').value=url;
 
 $('qrPlaceholder').innerHTML=
 '<strong>'+
@@ -1545,15 +1328,15 @@ navigator.clipboard &&
 navigator.clipboard.writeText
 ){
 
-navigator.clipboard.writeText(
-url
-).then(function(){
+navigator.clipboard.writeText(url)
+.then(function(){
 
 alert(
 'Pautan STAND HC berjaya disalin.'
 );
 
-}).catch(function(){
+})
+.catch(function(){
 
 fallbackCopy(url);
 
@@ -1570,7 +1353,7 @@ fallbackCopy(url);
 
 function fallbackCopy(text){
 
-const input =
+const input=
 document.createElement('input');
 
 input.value=text;
@@ -1606,12 +1389,9 @@ title:
 text:
 'Pendaftaran Keahlian STAND HC',
 
-url:
-url
+url:url
 
-}).catch(function(){
-
-});
+}).catch(function(){});
 
 }else{
 
@@ -1629,8 +1409,6 @@ copyShareLink();
 document.addEventListener(
 'DOMContentLoaded',
 function(){
-
-loadSettings();
 
 render();
 
