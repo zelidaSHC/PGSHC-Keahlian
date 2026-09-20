@@ -2,7 +2,7 @@
 <html lang="ms">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#063b88"><title>PGSHC Membership V2</title>
+<meta name="theme-color" content="#063b88"><title>STAND HC Membership</title>
 <style>
 *{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f4f7fb;color:#182334}
 header{background:linear-gradient(135deg,#063b88,#0b75dc);color:white;padding:20px 16px;text-align:center}
@@ -98,17 +98,17 @@ table{width:100%;border-collapse:collapse;font-size:12px}th,td{border-bottom:1px
 </main>
 <script>
 const $=x=>document.getElementById(x);
-let members=JSON.parse(localStorage.getItem('pgshc_v2_members')||'[]');
-$('endpoint').value=localStorage.getItem('pgshc_endpoint')||'';
+let members=JSON.parse(localStorage.getItem('standhc_members')||'[]');
+$('endpoint').value=localStorage.getItem('standhc_endpoint')||'';
 function show(id,btn){document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));$(id).classList.add('active');document.querySelectorAll('nav button').forEach(x=>x.classList.remove('active'));btn.classList.add('active');if(id==='dashboard')render()}
 function data(){const r=document.querySelector('input[name="kat"]:checked');return {nama:$('nama').value.trim(),ic:$('ic').value.trim(),telefon:$('telefon').value.trim(),email:$('email').value.trim(),alamat:$('alamat').value.trim(),kategori:r?r.value:'',anak:$('anak').value.trim(),sekolah:$('sekolah').value.trim(),kategoriAnak:$('katAnak').value.trim(),jantina:$('jantina').value,tarikh:new Date().toISOString().slice(0,10)}}
 async function submitMember(){const d=data();if(!d.nama||!d.ic||!d.telefon||!d.kategori||!$('setuju').checked){alert('Sila lengkapkan semua medan wajib dan persetujuan.');return}d.noPermohonan='PGSHC-'+new Date().getFullYear()+'-'+String(Date.now()).slice(-6);d.status='Dalam Semakan';members.push(d);localStorage.setItem('pgshc_v2_members',JSON.stringify(members));let sent=false,url=localStorage.getItem('pgshc_endpoint');if(url){try{await fetch(url,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain'},body:JSON.stringify(d)});sent=true}catch(e){}}$('success').style.display='block';$('success').innerHTML='Pendaftaran berjaya. No. permohonan: <b>'+d.noPermohonan+'</b>'+(sent?' • Data dihantar ke Google Sheets.':' • Disimpan pada peranti.');window.scrollTo({top:0,behavior:'smooth'});clearForm()}
 function clearForm(){['nama','ic','telefon','email','alamat','anak','sekolah','katAnak'].forEach(x=>$(x).value='');$('jantina').value='';$('setuju').checked=false;document.querySelectorAll('input[name="kat"]').forEach(x=>x.checked=false)}
-function render(){members=JSON.parse(localStorage.getItem('pgshc_v2_members')||'[]');$('total').textContent=members.length;$('parents').textContent=members.filter(x=>x.kategori.includes('Ibu')).length;$('supporters').textContent=members.filter(x=>x.kategori.includes('Penyokong')).length;$('rows').innerHTML=members.map((x,i)=>`<tr><td>${i+1}</td><td><b>${esc(x.nama)}</b><br><span class="small">${x.noPermohonan}</span></td><td><span class="badge">${esc(x.kategori)}</span></td><td>${esc(x.telefon)}</td><td>${esc(x.status)}</td><td>${x.tarikh}</td></tr>`).join('')}
+function render(){members=JSON.parse(localStorage.getItem('standhc_members')||'[]');$('total').textContent=members.length;$('parents').textContent=members.filter(x=>x.kategori.includes('Ibu')).length;$('supporters').textContent=members.filter(x=>x.kategori.includes('Penyokong')).length;$('rows').innerHTML=members.map((x,i)=>`<tr><td>${i+1}</td><td><b>${esc(x.nama)}</b><br><span class="small">${x.noPermohonan}</span></td><td><span class="badge">${esc(x.kategori)}</span></td><td>${esc(x.telefon)}</td><td>${esc(x.status)}</td><td>${x.tarikh}</td></tr>`).join('')}
 function esc(s){return String(s||'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
-function exportCSV(){if(!members.length){alert('Tiada data.');return}let keys=['noPermohonan','nama','ic','telefon','email','alamat','kategori','anak','sekolah','kategoriAnak','jantina','tarikh','status'];let q=v=>`"${String(v??'').replaceAll('"','""')}"`;let csv=[keys.join(','),...members.map(x=>keys.map(k=>q(x[k])).join(','))].join('\\n');let a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['\\ufeff'+csv],{type:'text/csv'}));a.download='PGSHC_Senarai_Keahlian.csv';a.click()}
+function exportCSV(){if(!members.length){alert('Tiada data.');return}let keys=['noPermohonan','nama','ic','telefon','email','alamat','kategori','anak','sekolah','kategoriAnak','jantina','tarikh','status'];let q=v=>`"${String(v??'').replaceAll('"','""')}"`;let csv=[keys.join(','),...members.map(x=>keys.map(k=>q(x[k])).join(','))].join('\\n');let a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['\\ufeff'+csv],{type:'text/csv'}));a.download='STAND_HC_Keahlian.csv';a.click()}
 function saveEndpoint(){localStorage.setItem('pgshc_endpoint',$('endpoint').value.trim());$('endpointStatus').textContent='URL disimpan pada peranti ini.'}
-function clearData(){if(confirm('Padam semua data tempatan PGSHC?')){localStorage.removeItem('pgshc_v2_members');render()}}
+function clearData(){if(confirm('Padam semua data tempatan STAND HC?')){localStorage.removeItem('standhc_members');render()}}
 render();
 </script>
 
