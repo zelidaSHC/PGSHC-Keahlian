@@ -92,8 +92,8 @@ button.danger {
   background: #b91c1c;
 }
 
-button.warning {
-  background: #b45309;
+button.whatsapp {
+  background: #15803d;
 }
 
 input,
@@ -184,7 +184,7 @@ label {
 table {
   width: 100%;
   border-collapse: collapse;
-  min-width: 900px;
+  min-width: 950px;
 }
 
 th,
@@ -198,11 +198,6 @@ td {
 th {
   background: #111827;
   color: white;
-}
-
-.small {
-  font-size: 13px;
-  color: #6b7280;
 }
 
 .action-buttons {
@@ -273,11 +268,13 @@ Admin
 </div>
 
 
+
 <!-- =====================================================
      PENDAFTARAN
 ===================================================== -->
 
-<section id="registerPage" class="card">
+<section id="registerPage"
+         class="card">
 
 <h2>Pendaftaran Keahlian STAND HC</h2>
 
@@ -348,9 +345,12 @@ Admin
 
 <label>Kategori Keahlian</label>
 
-<select id="kategori" required>
+<select id="kategori"
+        required>
 
-<option value="">-- Pilih --</option>
+<option value="">
+-- Pilih --
+</option>
 
 <option value="Pemain">
 Pemain
@@ -403,11 +403,25 @@ Penaja
 -- Pilih jika berkaitan --
 </option>
 
-<option value="U12">U12</option>
-<option value="U14">U14</option>
-<option value="U16">U16</option>
-<option value="U18">U18</option>
-<option value="Senior">Senior</option>
+<option value="U12">
+U12
+</option>
+
+<option value="U14">
+U14
+</option>
+
+<option value="U16">
+U16
+</option>
+
+<option value="U18">
+U18
+</option>
+
+<option value="Senior">
+Senior
+</option>
 
 </select>
 
@@ -420,7 +434,9 @@ Penaja
 
 <select id="jantina">
 
-<option value="">-- Pilih --</option>
+<option value="">
+-- Pilih --
+</option>
 
 <option value="Lelaki">
 Lelaki
@@ -450,23 +466,27 @@ Hantar Pendaftaran
 
 
 <!-- =====================================================
-     STATUS
+     SEMAK STATUS
 ===================================================== -->
 
-<section id="statusPage" class="card hidden">
+<section id="statusPage"
+         class="card hidden">
 
 <h2>Semak Status Permohonan</h2>
 
-<p class="small">
+<p>
 Masukkan nombor permohonan anda.
 </p>
 
+
 <input id="statusApplicationNo"
-       placeholder="Contoh: STANDHC-2026-000001">
+       placeholder="Contoh: STANDHC-2026-644608">
+
 
 <button onclick="checkMemberStatus()">
 Semak Status
 </button>
+
 
 <div id="statusResult"></div>
 
@@ -475,10 +495,11 @@ Semak Status
 
 
 <!-- =====================================================
-     SHARE
+     KONGSI
 ===================================================== -->
 
-<section id="sharePage" class="card hidden">
+<section id="sharePage"
+         class="card hidden">
 
 <h2>Kongsi Pendaftaran</h2>
 
@@ -487,17 +508,21 @@ Kongsi pautan pendaftaran STAND HC kepada
 ibubapa, pemain, penyokong dan penaja.
 </p>
 
+
 <input id="shareUrl"
        readonly>
+
 
 <button onclick="copyShareLink()">
 Salin Pautan
 </button>
 
+
 <button class="secondary"
         onclick="shareWhatsApp()">
 Kongsi WhatsApp
 </button>
+
 
 <div id="shareMessage"></div>
 
@@ -506,16 +531,18 @@ Kongsi WhatsApp
 
 
 <!-- =====================================================
-     ADMIN LOGIN
+     ADMIN
 ===================================================== -->
 
-<section id="adminPage" class="card hidden">
+<section id="adminPage"
+         class="card hidden">
+
 
 <div id="adminLogin">
 
 <h2>Log Masuk Admin</h2>
 
-<p class="small">
+<p>
 Akses ini hanya untuk pentadbir STAND HC.
 </p>
 
@@ -544,13 +571,12 @@ Log Masuk Admin
 
 
 
-<!-- =====================================================
-     ADMIN PANEL
-===================================================== -->
+<div id="adminPanel"
+     class="hidden">
 
-<div id="adminPanel" class="hidden">
 
 <h2>Dashboard Admin STAND HC</h2>
+
 
 <div id="adminWelcome"
      class="notice">
@@ -562,6 +588,7 @@ Log Masuk Admin
 Refresh Data
 </button>
 
+
 <button class="danger"
         onclick="adminLogout()">
 Log Keluar
@@ -572,6 +599,7 @@ Log Keluar
      class="admin-table-wrap"
      style="margin-top:20px;">
 </div>
+
 
 </div>
 
@@ -593,14 +621,12 @@ STAND Handball Club (STAND HC)
 
 
 /* =====================================================
-   GOOGLE APPS SCRIPT URL
+   GOOGLE APPS SCRIPT
 ===================================================== */
 
 const GOOGLE_SCRIPT_URL =
 'https://script.google.com/macros/s/AKfycbzdA7IuyJk6HvU1-n6RkZm5E5QkP5itq_wSrgMEHPsXF_IrmRoao0mxeP4WV_tTvT-TcA/exec';
 
-const STORAGE_MEMBERS =
-'standhc_members';
 
 
 /* =====================================================
@@ -615,7 +641,7 @@ function $(id) {
 
 
 /* =====================================================
-   PAGE NAVIGATION
+   PAGE
 ===================================================== */
 
 function showPage(page) {
@@ -632,45 +658,66 @@ function showPage(page) {
 
   pages.forEach(function(id) {
 
-    $(id).classList.add('hidden');
+    $(id).classList.add(
+      'hidden'
+    );
 
   });
 
 
   $(page + 'Page')
-    .classList.remove('hidden');
+    .classList.remove(
+      'hidden'
+    );
 
 
-  if (page === 'share') {
+  if (
+    page === 'share'
+  ) {
 
     $('shareUrl').value =
-      window.location.href;
+      window.location.origin +
+      window.location.pathname;
 
   }
 
 
-  if (page === 'admin') {
+  if (
+    page === 'admin'
+  ) {
 
     const key =
       sessionStorage.getItem(
         'standhc_admin_key'
       );
 
+
     if (key) {
 
       $('adminLogin')
-        .classList.add('hidden');
+        .classList.add(
+          'hidden'
+        );
 
       $('adminPanel')
-        .classList.remove('hidden');
+        .classList.remove(
+          'hidden'
+        );
+
 
       $('adminWelcome').innerHTML =
-        'Selamat datang, ' +
-        (
+
+        'Selamat datang, <strong>' +
+
+        escapeHtml(
           sessionStorage.getItem(
             'standhc_admin_name'
-          ) || 'Admin STAND HC'
-        );
+          ) ||
+          'Admin STAND HC'
+        ) +
+
+        '</strong>';
+
 
       loadAdminMembers();
 
@@ -694,22 +741,25 @@ function generateApplicationNumber() {
   const random =
     Math.floor(
       100000 +
-      Math.random() * 900000
+      Math.random() *
+      900000
     );
 
 
   return (
+
     'STANDHC-' +
     year +
     '-' +
     random
+
   );
 
 }
 
 
 /* =====================================================
-   REGISTER
+   REGISTRATION
 ===================================================== */
 
 $('registrationForm')
@@ -734,39 +784,57 @@ function submitRegistration(event) {
       noPermohonan,
 
     nama:
-      $('nama').value.trim(),
+      $('nama')
+        .value
+        .trim(),
 
     ic:
-      $('ic').value.trim(),
+      $('ic')
+        .value
+        .trim(),
 
     telefon:
-      $('telefon').value.trim(),
+      $('telefon')
+        .value
+        .trim(),
 
     email:
-      $('email').value.trim(),
+      $('email')
+        .value
+        .trim(),
 
     alamat:
-      $('alamat').value.trim(),
+      $('alamat')
+        .value
+        .trim(),
 
     kategori:
-      $('kategori').value,
+      $('kategori')
+        .value,
 
     anak:
-      $('anak').value.trim(),
+      $('anak')
+        .value
+        .trim(),
 
     sekolah:
-      $('sekolah').value.trim(),
+      $('sekolah')
+        .value
+        .trim(),
 
     kategoriAnak:
-      $('kategoriAnak').value,
+      $('kategoriAnak')
+        .value,
 
     jantina:
-      $('jantina').value,
+      $('jantina')
+        .value,
 
     tarikh:
-      new Date().toLocaleDateString(
-        'ms-MY'
-      ),
+      new Date()
+        .toLocaleDateString(
+          'ms-MY'
+        ),
 
     status:
       'Dalam Semakan'
@@ -777,7 +845,9 @@ function submitRegistration(event) {
   $('registerMessage').innerHTML =
 
     '<div class="notice">' +
+
     'Sedang menghantar pendaftaran...' +
+
     '</div>';
 
 
@@ -787,44 +857,57 @@ function submitRegistration(event) {
 
     {
 
-      method: 'POST',
+      method:
+        'POST',
 
-      mode: 'no-cors',
+      mode:
+        'no-cors',
 
       headers: {
+
         'Content-Type':
           'text/plain;charset=utf-8'
+
       },
 
       body:
-        JSON.stringify(data)
+        JSON.stringify(
+          data
+        )
 
     }
 
   )
+
   .then(function() {
-
-    saveLocalMember(data);
-
 
     $('registerMessage').innerHTML =
 
       '<div class="success-box">' +
 
-      '<strong>Pendaftaran berjaya dihantar.</strong><br><br>' +
+      '<strong>' +
+      'Pendaftaran berjaya dihantar.' +
+      '</strong>' +
+
+      '<br><br>' +
 
       'No. Permohonan: ' +
 
       '<strong>' +
+
       noPermohonan +
-      '</strong><br><br>' +
+
+      '</strong>' +
+
+      '<br><br>' +
 
       'Sila simpan nombor ini untuk semakan status.' +
 
       '</div>';
 
 
-    $('registrationForm').reset();
+    $('registrationForm')
+      .reset();
 
   })
 
@@ -849,55 +932,11 @@ function submitRegistration(event) {
 
 
 /* =====================================================
-   LOCAL STORAGE
-===================================================== */
-
-function getLocalMembers() {
-
-  try {
-
-    return JSON.parse(
-      localStorage.getItem(
-        STORAGE_MEMBERS
-      ) || '[]'
-    );
-
-  } catch (e) {
-
-    return [];
-
-  }
-
-}
-
-
-function saveLocalMember(member) {
-
-  const members =
-    getLocalMembers();
-
-
-  members.push(member);
-
-
-  localStorage.setItem(
-
-    STORAGE_MEMBERS,
-
-    JSON.stringify(members)
-
-  );
-
-}
-
-
-/* =====================================================
    JSONP
 ===================================================== */
 
 function jsonpRequest(
   url,
-  callback,
   timeout = 15000
 ) {
 
@@ -905,15 +944,21 @@ function jsonpRequest(
     function(resolve, reject) {
 
       const callbackName =
+
         'standHC_' +
+
         Date.now() +
+
         '_' +
+
         Math.floor(
-          Math.random() * 10000
+          Math.random() *
+          10000
         );
 
 
-      let finished = false;
+      let finished =
+        false;
 
 
       function cleanup() {
@@ -933,35 +978,40 @@ function jsonpRequest(
 
         try {
 
-          delete window[callbackName];
+          delete window[
+            callbackName
+          ];
 
         } catch (e) {
 
-          window[callbackName] =
-            undefined;
+          window[
+            callbackName
+          ] = undefined;
 
         }
 
       }
 
 
-      window[callbackName] =
-        function(data) {
+      window[
+        callbackName
+      ] = function(data) {
 
-          if (finished) {
-            return;
-          }
-
-
-          finished = true;
+        if (finished) {
+          return;
+        }
 
 
-          cleanup();
+        finished =
+          true;
 
 
-          resolve(data);
+        cleanup();
 
-        };
+
+        resolve(data);
+
+      };
 
 
       const script =
@@ -975,13 +1025,17 @@ function jsonpRequest(
 
 
       script.src =
+
         url +
+
         (
           url.indexOf('?') >= 0
             ? '&'
             : '?'
         ) +
+
         'callback=' +
+
         encodeURIComponent(
           callbackName
         );
@@ -995,16 +1049,19 @@ function jsonpRequest(
           }
 
 
-          finished = true;
+          finished =
+            true;
 
 
           cleanup();
 
 
           reject(
+
             new Error(
               'Gagal menghubungi server.'
             )
+
           );
 
         };
@@ -1023,7 +1080,8 @@ function jsonpRequest(
           }
 
 
-          finished = true;
+          finished =
+            true;
 
 
           cleanup();
@@ -1048,7 +1106,7 @@ function jsonpRequest(
 
 
 /* =====================================================
-   STATUS CHECK
+   SEMAK STATUS LIVE
 ===================================================== */
 
 async function checkMemberStatus() {
@@ -1064,7 +1122,9 @@ async function checkMemberStatus() {
     $('statusResult').innerHTML =
 
       '<div class="error-box">' +
+
       'Sila masukkan nombor permohonan.' +
+
       '</div>';
 
     return;
@@ -1075,22 +1135,32 @@ async function checkMemberStatus() {
   $('statusResult').innerHTML =
 
     '<div class="notice">' +
-    'Sedang menyemak...' +
+
+    'Sedang mendapatkan status terkini...' +
+
     '</div>';
 
 
   try {
 
+    const url =
+
+      GOOGLE_SCRIPT_URL +
+
+      '?action=check' +
+
+      '&no=' +
+
+      encodeURIComponent(
+        no
+      );
+
+
     const result =
+
       await jsonpRequest(
-
-        GOOGLE_SCRIPT_URL +
-        '?action=members',
-
-        function() {},
-
+        url,
         15000
-
       );
 
 
@@ -1098,69 +1168,30 @@ async function checkMemberStatus() {
 
       throw new Error(
         result.error ||
-        'Gagal mendapatkan data.'
+        'Gagal mendapatkan status.'
       );
 
     }
 
 
-    const member =
-      result.members.find(
-        function(item) {
+    if (!result.found) {
 
-          return (
-            String(
-              item.noPermohonan
-            ).toUpperCase() ===
-            String(no).toUpperCase()
-          );
+      $('statusResult').innerHTML =
 
-        }
-      );
+        '<div class="error-box">' +
 
+        'No. permohonan tidak dijumpai.' +
 
-    if (!member) {
-
-      const localMembers =
-        getLocalMembers();
-
-
-      const local =
-        localMembers.find(
-          function(item) {
-
-            return (
-              String(
-                item.noPermohonan
-              ).toUpperCase() ===
-              String(no).toUpperCase()
-            );
-
-          }
-        );
-
-
-      if (local) {
-
-        showStatus(local);
-
-      } else {
-
-        $('statusResult').innerHTML =
-
-          '<div class="error-box">' +
-          'No. permohonan tidak dijumpai.' +
-          '</div>';
-
-      }
-
+        '</div>';
 
       return;
 
     }
 
 
-    showStatus(member);
+    showStatus(
+      result.member
+    );
 
 
   } catch (error) {
@@ -1168,43 +1199,17 @@ async function checkMemberStatus() {
     console.error(error);
 
 
-    const localMembers =
-      getLocalMembers();
+    $('statusResult').innerHTML =
 
+      '<div class="error-box">' +
 
-    const local =
-      localMembers.find(
-        function(item) {
+      'Tidak dapat mendapatkan status terkini.' +
 
-          return (
-            String(
-              item.noPermohonan
-            ).toUpperCase() ===
-            String(no).toUpperCase()
-          );
+      '<br><br>' +
 
-        }
-      );
+      'Sila cuba semula.' +
 
-
-    if (local) {
-
-      showStatus(local);
-
-    } else {
-
-      $('statusResult').innerHTML =
-
-        '<div class="error-box">' +
-
-        'Tidak dapat mendapatkan data ' +
-        'Google Sheets sekarang.<br><br>' +
-
-        'Sila cuba semula.' +
-
-        '</div>';
-
-    }
+      '</div>';
 
   }
 
@@ -1212,7 +1217,7 @@ async function checkMemberStatus() {
 
 
 /* =====================================================
-   SHOW STATUS
+   PAPAR STATUS
 ===================================================== */
 
 function showStatus(member) {
@@ -1250,77 +1255,115 @@ function showStatus(member) {
     '">' +
 
     '<strong>Status: ' +
-    (
+
+    escapeHtml(
       member.status ||
       'Dalam Semakan'
     ) +
-    '</strong><br><br>' +
+
+    '</strong>' +
+
+    '<br><br>' +
 
     'No. Permohonan: ' +
-    (
-      member.noPermohonan || '-'
+
+    escapeHtml(
+      member.noPermohonan
     ) +
+
     '<br>' +
 
     'Nama: ' +
-    (
-      member.nama || '-'
+
+    escapeHtml(
+      member.nama
     ) +
+
     '<br>' +
 
     'Kategori: ' +
-    (
-      member.kategori || '-'
+
+    escapeHtml(
+      member.kategori
     ) +
+
     '<br>';
 
 
-  if (member.noKeahlian) {
+  if (
+    member.noKeahlian
+  ) {
 
     html +=
 
       '<br>' +
 
-      '<strong>No. Keahlian: ' +
-      member.noKeahlian +
+      '<strong>' +
+
+      'No. Keahlian: ' +
+
+      escapeHtml(
+        member.noKeahlian
+      ) +
+
       '</strong><br>';
 
   }
 
 
-  if (member.tarikhDiluluskan) {
+  if (
+    member.tarikhDiluluskan
+  ) {
 
     html +=
 
       'Tarikh Diluluskan: ' +
-      member.tarikhDiluluskan +
+
+      escapeHtml(
+        member.tarikhDiluluskan
+      ) +
+
       '<br>';
 
   }
 
 
-  if (member.diluluskanOleh) {
+  if (
+    member.diluluskanOleh
+  ) {
 
     html +=
 
       'Diluluskan Oleh: ' +
-      member.diluluskanOleh +
+
+      escapeHtml(
+        member.diluluskanOleh
+      ) +
+
       '<br>';
 
   }
 
 
-  if (member.catatan) {
+  if (
+    member.catatan
+  ) {
 
     html +=
 
-      '<br>Catatan: ' +
-      member.catatan;
+      '<br>' +
+
+      'Catatan: ' +
+
+      escapeHtml(
+        member.catatan
+      );
 
   }
 
 
-  html += '</div>';
+  html +=
+    '</div>';
 
 
   $('statusResult').innerHTML =
@@ -1330,42 +1373,56 @@ function showStatus(member) {
 
 
 /* =====================================================
-   SHARE
+   SHARE LINK
 ===================================================== */
 
 function copyShareLink() {
 
   const url =
-    window.location.href;
+
+    window.location.origin +
+    window.location.pathname;
 
 
-  navigator.clipboard
-    .writeText(url)
-    .then(function() {
+  if (
+    navigator.clipboard &&
+    navigator.clipboard.writeText
+  ) {
 
-      $('shareMessage').innerHTML =
+    navigator.clipboard
+      .writeText(url)
+      .then(function() {
 
-        '<div class="success-box">' +
-        'Pautan berjaya disalin.' +
-        '</div>';
+        $('shareMessage').innerHTML =
 
-    })
+          '<div class="success-box">' +
 
-    .catch(function() {
+          'Pautan berjaya disalin.' +
 
-      $('shareUrl').select();
+          '</div>';
 
-      document.execCommand(
-        'copy'
-      );
+      });
 
-      $('shareMessage').innerHTML =
+  } else {
 
-        '<div class="success-box">' +
-        'Pautan berjaya disalin.' +
-        '</div>';
+    $('shareUrl').value =
+      url;
 
-    });
+    $('shareUrl').select();
+
+    document.execCommand(
+      'copy'
+    );
+
+    $('shareMessage').innerHTML =
+
+      '<div class="success-box">' +
+
+      'Pautan berjaya disalin.' +
+
+      '</div>';
+
+  }
 
 }
 
@@ -1373,19 +1430,38 @@ function copyShareLink() {
 function shareWhatsApp() {
 
   const url =
-    window.location.href;
+
+    window.location.origin +
+    window.location.pathname;
 
 
-  const text =
-    'Pendaftaran Keahlian STAND Handball Club (STAND HC)%0A%0A' +
-    'Sila daftar melalui pautan berikut:%0A' +
-    encodeURIComponent(url);
+  const message =
+
+    '🤾‍♂️ STAND HANDBALL CLUB (STAND HC)' +
+
+    '\n\n' +
+
+    '📝 Pendaftaran Keahlian' +
+
+    '\n\n' +
+
+    'Sila daftar melalui pautan berikut:' +
+
+    '\n' +
+
+    url;
 
 
   window.open(
+
     'https://wa.me/?text=' +
-    text,
+
+    encodeURIComponent(
+      message
+    ),
+
     '_blank'
+
   );
 
 }
@@ -1414,7 +1490,9 @@ function adminLogin() {
     $('adminLoginMessage').innerHTML =
 
       '<div class="error-box">' +
+
       'Sila masukkan Nama Admin.' +
+
       '</div>';
 
     return;
@@ -1427,7 +1505,9 @@ function adminLogin() {
     $('adminLoginMessage').innerHTML =
 
       '<div class="error-box">' +
+
       'Sila masukkan ADMIN KEY.' +
+
       '</div>';
 
     return;
@@ -1450,22 +1530,22 @@ function adminLogin() {
   $('adminLoginMessage').innerHTML =
 
     '<div class="notice">' +
+
     'Mengesahkan akses admin...' +
+
     '</div>';
 
 
-  loadAdminMembers(true);
+  loadAdminMembers();
 
 }
 
 
 /* =====================================================
-   ADMIN LOAD MEMBERS
+   LOAD ADMIN MEMBERS
 ===================================================== */
 
-async function loadAdminMembers(
-  showError = true
-) {
+async function loadAdminMembers() {
 
   const key =
     sessionStorage.getItem(
@@ -1474,16 +1554,16 @@ async function loadAdminMembers(
 
 
   if (!key) {
-
     return;
-
   }
 
 
   $('adminTable').innerHTML =
 
     '<div class="notice">' +
+
     'Sedang mendapatkan data Google Sheets...' +
+
     '</div>';
 
 
@@ -1496,13 +1576,16 @@ async function loadAdminMembers(
       '?action=members' +
 
       '&key=' +
-      encodeURIComponent(key);
+
+      encodeURIComponent(
+        key
+      );
 
 
     const result =
+
       await jsonpRequest(
         url,
-        null,
         15000
       );
 
@@ -1518,22 +1601,29 @@ async function loadAdminMembers(
 
 
     $('adminLogin')
-      .classList.add('hidden');
+      .classList.add(
+        'hidden'
+      );
 
 
     $('adminPanel')
-      .classList.remove('hidden');
+      .classList.remove(
+        'hidden'
+      );
 
 
     $('adminWelcome').innerHTML =
 
       'Selamat datang, <strong>' +
 
-      (
+      escapeHtml(
+
         sessionStorage.getItem(
           'standhc_admin_name'
         ) ||
+
         'Admin STAND HC'
+
       ) +
 
       '</strong>';
@@ -1553,7 +1643,7 @@ async function loadAdminMembers(
 
       '<div class="error-box">' +
 
-      (
+      escapeHtml(
         error.message ||
         'ADMIN KEY tidak sah atau sambungan gagal.'
       ) +
@@ -1561,7 +1651,8 @@ async function loadAdminMembers(
       '</div>';
 
 
-    $('adminTable').innerHTML = '';
+    $('adminTable').innerHTML =
+      '';
 
 
     sessionStorage.removeItem(
@@ -1591,7 +1682,9 @@ function renderAdminMembers(
     $('adminTable').innerHTML =
 
       '<div class="notice">' +
+
       'Tiada rekod pendaftaran.' +
+
       '</div>';
 
     return;
@@ -1609,15 +1702,13 @@ function renderAdminMembers(
 
     '<th>No.</th>' +
 
-    '<th>Permohonan</th>' +
+    '<th>No. Permohonan</th>' +
 
     '<th>Nama</th>' +
 
     '<th>Telefon</th>' +
 
     '<th>Kategori</th>' +
-
-    '<th>Sekolah</th>' +
 
     '<th>Status</th>' +
 
@@ -1634,6 +1725,33 @@ function renderAdminMembers(
 
   members.forEach(
     function(member, index) {
+
+      let whatsappButton =
+        '';
+
+
+      if (
+        member.status ===
+        'Diluluskan' &&
+        member.telefon
+      ) {
+
+        whatsappButton =
+
+          '<button class="whatsapp" ' +
+
+          'onclick="sendApprovalWhatsApp(' +
+
+          member.row +
+
+          ')">' +
+
+          '📱 WhatsApp' +
+
+          '</button>';
+
+      }
+
 
       html +=
 
@@ -1667,12 +1785,6 @@ function renderAdminMembers(
         ) +
         '</td>' +
 
-        '<td>' +
-        escapeHtml(
-          member.sekolah
-        ) +
-        '</td>' +
-
         '<td><strong>' +
         escapeHtml(
           member.status
@@ -1690,18 +1802,30 @@ function renderAdminMembers(
         '<div class="action-buttons">' +
 
         '<button class="success" ' +
+
         'onclick="approveMember(' +
+
         member.row +
+
         ')">' +
-        'Lulus' +
+
+        '✓ Lulus' +
+
         '</button>' +
 
         '<button class="danger" ' +
+
         'onclick="rejectMember(' +
+
         member.row +
+
         ')">' +
-        'Tolak' +
+
+        '✕ Tolak' +
+
         '</button>' +
+
+        whatsappButton +
 
         '</div>' +
 
@@ -1716,6 +1840,7 @@ function renderAdminMembers(
   html +=
 
     '</tbody>' +
+
     '</table>';
 
 
@@ -1738,15 +1863,23 @@ function approveMember(row) {
     );
 
 
-  if (catatan === null) {
+  if (
+    catatan === null
+  ) {
+
     return;
+
   }
 
 
   updateStatus(
+
     row,
+
     'Diluluskan',
+
     catatan
+
   );
 
 }
@@ -1765,15 +1898,23 @@ function rejectMember(row) {
     );
 
 
-  if (catatan === null) {
+  if (
+    catatan === null
+  ) {
+
     return;
+
   }
 
 
   updateStatus(
+
     row,
+
     'Ditolak',
+
     catatan
+
   );
 
 }
@@ -1830,7 +1971,9 @@ function updateStatus(
     'beforebegin',
 
     '<div class="notice">' +
-    'Sedang mengemaskini status...' +
+
+    '⏳ Sedang mengemaskini status...' +
+
     '</div>'
 
   );
@@ -1842,9 +1985,11 @@ function updateStatus(
 
     {
 
-      method: 'POST',
+      method:
+        'POST',
 
-      mode: 'no-cors',
+      mode:
+        'no-cors',
 
       headers: {
 
@@ -1854,21 +1999,64 @@ function updateStatus(
       },
 
       body:
-        JSON.stringify(data)
+        JSON.stringify(
+          data
+        )
 
     }
 
   )
+
   .then(function() {
 
+
     setTimeout(
+
       function() {
 
         loadAdminMembers();
 
       },
-      1500
+
+      1200
+
     );
+
+
+    if (
+      status ===
+      'Diluluskan'
+    ) {
+
+      alert(
+
+        '✅ Permohonan telah diluluskan.' +
+
+        '\n\n' +
+
+        'No. Keahlian telah dijana.' +
+
+        '\n\n' +
+
+        'Butang 📱 WhatsApp akan tersedia selepas data dikemaskini.'
+
+      );
+
+    }
+
+
+    if (
+      status ===
+      'Ditolak'
+    ) {
+
+      alert(
+
+        '❌ Permohonan telah ditolak.'
+
+      );
+
+    }
 
   })
 
@@ -1876,11 +2064,241 @@ function updateStatus(
 
     console.error(error);
 
+
     alert(
+
       'Gagal mengemaskini status.'
+
     );
 
   });
+
+}
+
+
+/* =====================================================
+   WHATSAPP KELULUSAN
+===================================================== */
+
+async function sendApprovalWhatsApp(
+  row
+) {
+
+  try {
+
+    const key =
+      sessionStorage.getItem(
+        'standhc_admin_key'
+      );
+
+
+    if (!key) {
+
+      alert(
+        'Sesi Admin telah tamat.'
+      );
+
+      return;
+
+    }
+
+
+    $('adminTable').insertAdjacentHTML(
+
+      'beforebegin',
+
+      '<div class="notice">' +
+
+      '⏳ Mendapatkan maklumat ahli...' +
+
+      '</div>'
+
+    );
+
+
+    const url =
+
+      GOOGLE_SCRIPT_URL +
+
+      '?action=members' +
+
+      '&key=' +
+
+      encodeURIComponent(
+        key
+      );
+
+
+    const result =
+
+      await jsonpRequest(
+        url,
+        15000
+      );
+
+
+    if (!result.ok) {
+
+      throw new Error(
+        result.error ||
+        'Gagal mendapatkan data ahli.'
+      );
+
+    }
+
+
+    const member =
+      result.members.find(
+        function(item) {
+
+          return (
+            Number(
+              item.row
+            ) ===
+            Number(row)
+          );
+
+        }
+      );
+
+
+    if (!member) {
+
+      alert(
+        'Rekod ahli tidak dijumpai.'
+      );
+
+      return;
+
+    }
+
+
+    if (
+      member.status !==
+      'Diluluskan'
+    ) {
+
+      alert(
+        'Ahli ini belum diluluskan.'
+      );
+
+      return;
+
+    }
+
+
+    if (
+      !member.telefon
+    ) {
+
+      alert(
+        'Nombor telefon ahli tidak tersedia.'
+      );
+
+      return;
+
+    }
+
+
+    let phone =
+      String(
+        member.telefon
+      )
+      .replace(
+        /\D/g,
+        ''
+      );
+
+
+    /* FORMAT MALAYSIA */
+
+    if (
+      phone.startsWith('0')
+    ) {
+
+      phone =
+        '60' +
+        phone.substring(1);
+
+    }
+
+
+    const message =
+
+      '🤾‍♂️ STAND HANDBALL CLUB (STAND HC)' +
+
+      '\n\n' +
+
+      'Assalamualaikum.' +
+
+      '\n\n' +
+
+      '🎉 Tahniah! Permohonan keahlian anda telah DILULUSKAN.' +
+
+      '\n\n' +
+
+      '👤 Nama: ' +
+      (member.nama || '-') +
+
+      '\n' +
+
+      '📝 No. Permohonan: ' +
+      (member.noPermohonan || '-') +
+
+      '\n' +
+
+      '🪪 No. Keahlian: ' +
+      (member.noKeahlian || '-') +
+
+      '\n' +
+
+      '📅 Tarikh Diluluskan: ' +
+      (member.tarikhDiluluskan || '-') +
+
+      '\n\n' +
+
+      'Terima kasih kerana menjadi ahli STAND Handball Club.' +
+
+      '\n\n' +
+
+      '🤾‍♂️ STAND HC';
+
+
+    const whatsappUrl =
+
+      'https://wa.me/' +
+
+      phone +
+
+      '?text=' +
+
+      encodeURIComponent(
+        message
+      );
+
+
+    window.open(
+      whatsappUrl,
+      '_blank'
+    );
+
+
+  } catch (error) {
+
+    console.error(error);
+
+
+    alert(
+
+      'Gagal mendapatkan maklumat ahli.' +
+
+      '\n\n' +
+
+      error.message
+
+    );
+
+  }
 
 }
 
@@ -1902,18 +2320,25 @@ function adminLogout() {
 
 
   $('adminLogin')
-    .classList.remove('hidden');
+    .classList.remove(
+      'hidden'
+    );
 
 
   $('adminPanel')
-    .classList.add('hidden');
+    .classList.add(
+      'hidden'
+    );
 
 
-  $('adminName').value = '';
+  $('adminName').value =
+    '';
 
-  $('adminKey').value = '';
+  $('adminKey').value =
+    '';
 
-  $('adminLoginMessage').innerHTML = '';
+  $('adminLoginMessage').innerHTML =
+    '';
 
 }
 
@@ -1928,36 +2353,36 @@ function escapeHtml(value) {
     value || ''
   )
 
-    .replace(
-      /&/g,
-      '&amp;'
-    )
+  .replace(
+    /&/g,
+    '&amp;'
+  )
 
-    .replace(
-      /</g,
-      '&lt;'
-    )
+  .replace(
+    /</g,
+    '&lt;'
+  )
 
-    .replace(
-      />/g,
-      '&gt;'
-    )
+  .replace(
+    />/g,
+    '&gt;'
+  )
 
-    .replace(
-      /"/g,
-      '&quot;'
-    )
+  .replace(
+    /"/g,
+    '&quot;'
+  )
 
-    .replace(
-      /'/g,
-      '&#039;'
-    );
+  .replace(
+    /'/g,
+    '&#039;'
+  );
 
 }
 
 
 /* =====================================================
-   AUTO SHARE URL
+   INITIAL
 ===================================================== */
 
 window.addEventListener(
@@ -1965,7 +2390,9 @@ window.addEventListener(
   function() {
 
     $('shareUrl').value =
-      window.location.href;
+
+      window.location.origin +
+      window.location.pathname;
 
   }
 );
