@@ -1,75 +1,2968 @@
+<!DOCTYPE html>
+<html lang="ms">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>
+STAND HC - Pendaftaran Keahlian
+</title>
+
+
+<style>
+
 /************************************************************
- * FORMAT & VALIDATE NOMBOR TELEFON MALAYSIA
+ * GLOBAL
  ************************************************************/
-function formatMalaysiaPhone(phone) {
+* {
+  box-sizing: border-box;
+}
 
-  let value = String(phone || '').trim();
 
-  // Buang space, dash, bracket
-  value = value.replace(/[\s\-().]/g, '');
+body {
 
-  // +60123456789 -> 60123456789
-  if (value.startsWith('+60')) {
-    value = value.substring(1);
+  margin: 0;
+
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+
+  background:
+    linear-gradient(
+      135deg,
+      #eef4fb,
+      #dfeaf7
+    );
+
+  color:
+    #1e293b;
+
+}
+
+
+.container {
+
+  width: 100%;
+
+  max-width:
+    1100px;
+
+  margin:
+    auto;
+
+  padding:
+    20px;
+
+}
+
+
+/************************************************************
+ * HEADER
+ ************************************************************/
+.header {
+
+  background:
+    linear-gradient(
+      135deg,
+      #0f172a,
+      #1d4ed8
+    );
+
+  color:
+    white;
+
+  padding:
+    35px 20px;
+
+  border-radius:
+    25px;
+
+  text-align:
+    center;
+
+  box-shadow:
+    0 10px 30px
+    rgba(0,0,0,.15);
+
+}
+
+
+.header h1 {
+
+  margin:
+    0 0 10px;
+
+  font-size:
+    30px;
+
+}
+
+
+.header p {
+
+  margin:
+    0;
+
+  font-size:
+    20px;
+
+}
+
+
+/************************************************************
+ * TABS
+ ************************************************************/
+.tabs {
+
+  display:
+    flex;
+
+  gap:
+    10px;
+
+  margin:
+    20px 0;
+
+  overflow-x:
+    auto;
+
+}
+
+
+.tab {
+
+  flex:
+    1;
+
+  min-width:
+    130px;
+
+  border:
+    none;
+
+  padding:
+    15px;
+
+  border-radius:
+    15px;
+
+  background:
+    white;
+
+  color:
+    #334155;
+
+  font-weight:
+    bold;
+
+  font-size:
+    16px;
+
+  cursor:
+    pointer;
+
+  white-space:
+    nowrap;
+
+}
+
+
+.tab.active {
+
+  background:
+    #0757e8;
+
+  color:
+    white;
+
+}
+
+
+/************************************************************
+ * CARD
+ ************************************************************/
+.card {
+
+  background:
+    white;
+
+  padding:
+    25px;
+
+  border-radius:
+    22px;
+
+  margin-bottom:
+    20px;
+
+  box-shadow:
+    0 8px 25px
+    rgba(15,23,42,.08);
+
+}
+
+
+.card h2 {
+
+  margin-top:
+    0;
+
+  font-size:
+    25px;
+
+}
+
+
+/************************************************************
+ * FORM
+ ************************************************************/
+.grid {
+
+  display:
+    grid;
+
+  grid-template-columns:
+    repeat(
+      2,
+      1fr
+    );
+
+  gap:
+    15px;
+
+}
+
+
+.field {
+
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  gap:
+    7px;
+
+}
+
+
+.field.full {
+
+  grid-column:
+    1 / -1;
+
+}
+
+
+label {
+
+  font-weight:
+    bold;
+
+  font-size:
+    14px;
+
+}
+
+
+input,
+select,
+textarea {
+
+  width:
+    100%;
+
+  padding:
+    13px;
+
+  border:
+    1px solid
+    #cbd5e1;
+
+  border-radius:
+    12px;
+
+  font-size:
+    15px;
+
+  outline:
+    none;
+
+}
+
+
+input:focus,
+select:focus,
+textarea:focus {
+
+  border-color:
+    #2563eb;
+
+}
+
+
+textarea {
+
+  min-height:
+    100px;
+
+  resize:
+    vertical;
+
+}
+
+
+/************************************************************
+ * BUTTON
+ ************************************************************/
+.actions {
+
+  display:
+    flex;
+
+  gap:
+    10px;
+
+  flex-wrap:
+    wrap;
+
+  margin-top:
+    18px;
+
+}
+
+
+.btn {
+
+  border:
+    none;
+
+  border-radius:
+    12px;
+
+  padding:
+    13px 18px;
+
+  font-weight:
+    bold;
+
+  font-size:
+    15px;
+
+  cursor:
+    pointer;
+
+}
+
+
+.btn-primary {
+
+  background:
+    #0757e8;
+
+  color:
+    white;
+
+}
+
+
+.btn-success {
+
+  background:
+    #16a34a;
+
+  color:
+    white;
+
+}
+
+
+.btn-danger {
+
+  background:
+    #dc2626;
+
+  color:
+    white;
+
+}
+
+
+.btn-whatsapp {
+
+  background:
+    #00d95f;
+
+  color:
+    white;
+
+}
+
+
+.btn:disabled {
+
+  opacity:
+    .55;
+
+  cursor:
+    not-allowed;
+
+}
+
+
+/************************************************************
+ * NOTICE
+ ************************************************************/
+.notice {
+
+  padding:
+    15px;
+
+  border-radius:
+    12px;
+
+  margin-top:
+    15px;
+
+}
+
+
+.notice-success {
+
+  background:
+    #dcfce7;
+
+  color:
+    #166534;
+
+}
+
+
+.notice-warning {
+
+  background:
+    #fef3c7;
+
+  color:
+    #92400e;
+
+}
+
+
+.notice-danger {
+
+  background:
+    #fee2e2;
+
+  color:
+    #991b1b;
+
+}
+
+
+/************************************************************
+ * STATUS
+ ************************************************************/
+.status-box {
+
+  margin-top:
+    18px;
+
+  padding:
+    20px;
+
+  border-radius:
+    15px;
+
+  background:
+    #f8fafc;
+
+  border:
+    1px solid
+    #cbd5e1;
+
+}
+
+
+.status-approved {
+
+  background:
+    #dcfce7;
+
+  border-color:
+    #86efac;
+
+}
+
+
+.status-rejected {
+
+  background:
+    #fee2e2;
+
+  border-color:
+    #fca5a5;
+
+}
+
+
+.status-review {
+
+  background:
+    #fef3c7;
+
+  border-color:
+    #fcd34d;
+
+}
+
+
+/************************************************************
+ * TABLE
+ ************************************************************/
+.table-wrap {
+
+  width:
+    100%;
+
+  overflow-x:
+    auto;
+
+}
+
+
+table {
+
+  width:
+    100%;
+
+  min-width:
+    1000px;
+
+  border-collapse:
+    collapse;
+
+}
+
+
+th,
+td {
+
+  border:
+    1px solid
+    #e2e8f0;
+
+  padding:
+    10px;
+
+  text-align:
+    left;
+
+  vertical-align:
+    top;
+
+}
+
+
+th {
+
+  background:
+    #f1f5f9;
+
+  font-weight:
+    bold;
+
+}
+
+
+td .btn {
+
+  margin:
+    3px;
+
+}
+
+
+/************************************************************
+ * FOOTER
+ ************************************************************/
+.footer {
+
+  text-align:
+    center;
+
+  padding:
+    30px;
+
+  color:
+    #64748b;
+
+  font-size:
+    17px;
+
+}
+
+
+/************************************************************
+ * HIDDEN
+ ************************************************************/
+.hidden {
+
+  display:
+    none !important;
+
+}
+
+
+.small {
+
+  color:
+    #64748b;
+
+  font-size:
+    13px;
+
+}
+
+
+/************************************************************
+ * MOBILE
+ ************************************************************/
+@media(max-width:700px) {
+
+  .container {
+
+    padding:
+      12px;
+
   }
 
-  // 0123456789 -> 60123456789
-  else if (value.startsWith('0')) {
-    value = '60' + value.substring(1);
+
+  .header {
+
+    padding:
+      28px 15px;
+
   }
 
-  // 123456789 -> 60123456789
-  else if (value.startsWith('1')) {
-    value = '60' + value;
+
+  .header h1 {
+
+    font-size:
+      23px;
+
   }
 
-  // Buang semua character selain nombor
-  value = value.replace(/\D/g, '');
 
-  /*
-   * Format mobile Malaysia:
+  .header p {
+
+    font-size:
+      17px;
+
+  }
+
+
+  .grid {
+
+    grid-template-columns:
+      1fr;
+
+  }
+
+
+  .field.full {
+
+    grid-column:
+      auto;
+
+  }
+
+
+  .card {
+
+    padding:
+      18px;
+
+  }
+
+
+  .card h2 {
+
+    font-size:
+      21px;
+
+  }
+
+
+  .tabs {
+
+    gap:
+      7px;
+
+  }
+
+
+  .tab {
+
+    min-width:
+      120px;
+
+    padding:
+      13px 10px;
+
+  }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
+<div class="header">
+
+<h1>
+🤾‍♂️ STAND HANDBALL CLUB
+</h1>
+
+<p>
+Sistem Pendaftaran Keahlian
+</p>
+
+</div>
+
+
+<!-- =====================================================
+     TABS
+===================================================== -->
+
+<div class="tabs">
+
+<button
+class="tab active"
+onclick="showTab('register',this)">
+
+Pendaftaran
+
+</button>
+
+
+<button
+class="tab"
+onclick="showTab('status',this)">
+
+Semak Status
+
+</button>
+
+
+<button
+class="tab"
+onclick="showTab('share',this)">
+
+Kongsi
+
+</button>
+
+
+<button
+class="tab"
+onclick="showTab('admin',this)">
+
+Admin
+
+</button>
+
+</div>
+
+
+<!-- =====================================================
+     PENDAFTARAN
+===================================================== -->
+
+<section
+id="register"
+class="card tab-content">
+
+<h2>
+📝 Pendaftaran Keahlian
+</h2>
+
+<p class="small">
+Sila lengkapkan maklumat dengan betul.
+</p>
+
+
+<form
+id="registrationForm">
+
+
+<div class="grid">
+
+
+<div class="field">
+
+<label>
+Nama
+</label>
+
+<input
+id="nama"
+required
+autocomplete="name">
+
+</div>
+
+
+<div class="field">
+
+<label>
+No. IC / Dokumen
+</label>
+
+<input
+id="ic"
+required>
+
+</div>
+
+
+<div class="field">
+
+<label>
+No. Telefon
+</label>
+
+<input
+id="telefon"
+type="tel"
+placeholder="Contoh: 0123456789"
+required>
+
+</div>
+
+
+<div class="field">
+
+<label>
+E-mel
+</label>
+
+<input
+id="email"
+type="email">
+
+</div>
+
+
+<div class="field full">
+
+<label>
+Alamat
+</label>
+
+<textarea
+id="alamat">
+</textarea>
+
+</div>
+
+
+<div class="field">
+
+<label>
+Kategori
+</label>
+
+<select
+id="kategori"
+required>
+
+<option value="">
+-- Pilih Kategori --
+</option>
+
+<option value="Pemain">
+Pemain
+</option>
+
+<option value="Ibu/Bapa">
+Ibu / Bapa
+</option>
+
+<option value="Jurulatih">
+Jurulatih
+</option>
+
+<option value="Pegawai">
+Pegawai
+</option>
+
+<option value="Penyokong">
+Penyokong
+</option>
+
+</select>
+
+</div>
+
+
+<div class="field">
+
+<label>
+Anak / Pemain
+</label>
+
+<input
+id="anak">
+
+</div>
+
+
+<div class="field">
+
+<label>
+Sekolah
+</label>
+
+<input
+id="sekolah">
+
+</div>
+
+
+<div class="field">
+
+<label>
+Kategori Anak
+</label>
+
+<input
+id="kategoriAnak">
+
+</div>
+
+
+<div class="field">
+
+<label>
+Jantina
+</label>
+
+<select
+id="jantina">
+
+<option value="">
+-- Pilih --
+</option>
+
+<option value="Lelaki">
+Lelaki
+</option>
+
+<option value="Perempuan">
+Perempuan
+</option>
+
+</select>
+
+</div>
+
+
+<div class="field">
+
+<label>
+Tarikh
+</label>
+
+<input
+id="tarikh"
+type="date"
+required>
+
+</div>
+
+
+</div>
+
+
+<div
+id="registerMessage"
+class="hidden">
+</div>
+
+
+<div class="actions">
+
+
+<button
+id="submitButton"
+type="submit"
+class="btn btn-primary">
+
+📩 Hantar Pendaftaran
+
+</button>
+
+
+<button
+type="reset"
+class="btn">
+
+Reset
+
+</button>
+
+
+</div>
+
+
+</form>
+
+</section>
+
+
+<!-- =====================================================
+     SEMAK STATUS
+===================================================== -->
+
+<section
+id="status"
+class="card tab-content hidden">
+
+<h2>
+🔎 Semak Status Pendaftaran
+</h2>
+
+<p class="small">
+Masukkan No. Permohonan.
+</p>
+
+
+<div class="field">
+
+<label>
+No. Permohonan
+</label>
+
+<input
+id="statusNo"
+placeholder="STANDHC-2026-123456">
+
+</div>
+
+
+<div class="actions">
+
+<button
+id="statusButton"
+class="btn btn-primary"
+onclick="checkMemberStatus()">
+
+🔎 Semak Status
+
+</button>
+
+</div>
+
+
+<div
+id="statusMessage"
+class="hidden">
+</div>
+
+
+<div
+id="statusResult"
+class="hidden">
+</div>
+
+</section>
+
+
+<!-- =====================================================
+     KONGSI
+===================================================== -->
+
+<section
+id="share"
+class="card tab-content hidden">
+
+<h2>
+📤 Kongsi Pendaftaran
+</h2>
+
+<p>
+Kongsi link rasmi STAND HC.
+</p>
+
+
+<input
+id="shareUrl"
+readonly>
+
+
+<div class="actions">
+
+<button
+class="btn btn-primary"
+onclick="copyShareLink()">
+
+📋 Salin Link
+
+</button>
+
+
+<button
+class="btn btn-whatsapp"
+onclick="shareWhatsApp()">
+
+📱 WhatsApp
+
+</button>
+
+</div>
+
+
+<div
+id="shareMessage"
+class="notice notice-success hidden">
+
+Link telah disalin.
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+     ADMIN
+===================================================== -->
+
+<section
+id="admin"
+class="card tab-content hidden">
+
+<h2>
+🔐 Admin STAND HC
+</h2>
+
+
+<!-- LOGIN -->
+
+<div id="adminLoginBox">
+
+
+<div class="grid">
+
+
+<div class="field">
+
+<label>
+Nama Admin
+</label>
+
+<input
+id="adminName"
+placeholder="Nama Admin">
+
+</div>
+
+
+<div class="field">
+
+<label>
+Admin Key
+</label>
+
+<input
+id="adminKey"
+type="password">
+
+</div>
+
+
+</div>
+
+
+<div class="actions">
+
+<button
+id="adminLoginButton"
+class="btn btn-primary"
+onclick="adminLogin()">
+
+🔐 Login Admin
+
+</button>
+
+</div>
+
+
+<div
+id="adminLoginMessage"
+class="hidden">
+</div>
+
+
+</div>
+
+
+<!-- ADMIN PANEL -->
+
+<div
+id="adminPanel"
+class="hidden">
+
+
+<div class="actions">
+
+
+<button
+class="btn btn-primary"
+onclick="loadAdminMembers()">
+
+🔄 Refresh
+
+</button>
+
+
+<button
+class="btn"
+onclick="adminLogout()">
+
+Logout
+
+</button>
+
+
+</div>
+
+
+<div
+id="adminTable"
+style="margin-top:20px">
+</div>
+
+
+</div>
+
+
+</section>
+
+
+<div class="footer">
+
+STAND Handball Club (STAND HC)
+
+</div>
+
+
+</div>
+
+
+<script>
+
+
+/************************************************************
+ * GOOGLE APPS SCRIPT URL
+ ************************************************************/
+const GOOGLE_SCRIPT_URL =
+'https://script.google.com/macros/s/AKfycbzdA7IuyJk6HvU1-n6RkZm5E5QkP5itq_wSrgMEHPsXF_IrmRoao0mxeP4WV_tTvT-TcA/exec';
+
+
+/************************************************************
+ * GLOBAL
+ ************************************************************/
+let isSubmitting = false;
+
+
+/************************************************************
+ * TAB
+ ************************************************************/
+function showTab(
+  id,
+  button
+) {
+
+  document
+    .querySelectorAll(
+      '.tab-content'
+    )
+    .forEach(
+      function(section) {
+
+        section.classList.add(
+          'hidden'
+        );
+
+      }
+    );
+
+
+  document
+    .getElementById(id)
+    .classList.remove(
+      'hidden'
+    );
+
+
+  document
+    .querySelectorAll(
+      '.tab'
+    )
+    .forEach(
+      function(tab) {
+
+        tab.classList.remove(
+          'active'
+        );
+
+      }
+    );
+
+
+  if (button) {
+
+    button.classList.add(
+      'active'
+    );
+
+  }
+
+
+  if (
+    id === 'share'
+  ) {
+
+    document
+      .getElementById(
+        'shareUrl'
+      )
+      .value =
+      window.location.origin +
+      window.location.pathname;
+
+  }
+
+}
+
+
+/************************************************************
+ * APPLICATION NUMBER
+ ************************************************************/
+function generateApplicationNumber() {
+
+  return (
+    'STANDHC-2026-' +
+    Math.floor(
+      100000 +
+      Math.random() *
+      900000
+    )
+  );
+
+}
+
+
+/************************************************************
+ * SUBMISSION ID
+ ************************************************************/
+function generateSubmissionId() {
+
+  if (
+    window.crypto &&
+    crypto.randomUUID
+  ) {
+
+    return crypto.randomUUID();
+
+  }
+
+
+  return (
+    Date.now() +
+    '-' +
+    Math.random()
+      .toString(36)
+      .substring(2)
+  );
+
+}
+
+
+/************************************************************
+ * JSONP
+ ************************************************************/
+function jsonpRequest(
+  url,
+  timeout = 15000
+) {
+
+  return new Promise(
+    function(
+      resolve,
+      reject
+    ) {
+
+      const callbackName =
+        'standhcCallback_' +
+        Date.now() +
+        '_' +
+        Math.floor(
+          Math.random() *
+          10000
+        );
+
+
+      const script =
+        document.createElement(
+          'script'
+        );
+
+
+      let timer;
+
+
+      window[callbackName] =
+        function(data) {
+
+          clearTimeout(timer);
+
+          delete window[
+            callbackName
+          ];
+
+
+          if (
+            script.parentNode
+          ) {
+
+            script.parentNode
+              .removeChild(
+                script
+              );
+
+          }
+
+
+          resolve(data);
+
+        };
+
+
+      script.onerror =
+        function() {
+
+          clearTimeout(timer);
+
+          delete window[
+            callbackName
+          ];
+
+
+          if (
+            script.parentNode
+          ) {
+
+            script.parentNode
+              .removeChild(
+                script
+              );
+
+          }
+
+
+          reject(
+            new Error(
+              'Gagal mendapatkan data daripada server.'
+            )
+          );
+
+        };
+
+
+      script.src =
+        url +
+        '&callback=' +
+        callbackName;
+
+
+      document.body.appendChild(
+        script
+      );
+
+
+      timer =
+        setTimeout(
+          function() {
+
+            delete window[
+              callbackName
+            ];
+
+
+            if (
+              script.parentNode
+            ) {
+
+              script.parentNode
+                .removeChild(
+                  script
+                );
+
+            }
+
+
+            reject(
+              new Error(
+                'Server mengambil masa terlalu lama.'
+              )
+            );
+
+          },
+          timeout
+        );
+
+    }
+  );
+
+}
+
+
+/************************************************************
+ * SUBMIT REGISTRATION
+ ************************************************************/
+document
+  .getElementById(
+    'registrationForm'
+  )
+  .addEventListener(
+    'submit',
+    submitRegistration
+  );
+
+
+async function submitRegistration(
+  event
+) {
+
+  event.preventDefault();
+
+
+  /******************************************************
+   * BLOCK DOUBLE CLICK
+   ******************************************************/
+  if (
+    isSubmitting
+  ) {
+
+    return;
+
+  }
+
+
+  isSubmitting = true;
+
+
+  const button =
+    document.getElementById(
+      'submitButton'
+    );
+
+
+  const messageBox =
+    document.getElementById(
+      'registerMessage'
+    );
+
+
+  button.disabled =
+    true;
+
+
+  button.innerText =
+    '⏳ Sedang menghantar...';
+
+
+  messageBox.className =
+    'notice notice-warning';
+
+
+  messageBox.innerHTML =
+    '⏳ Pendaftaran sedang dihantar. Jangan tekan butang sekali lagi.';
+
+
+  /******************************************************
+   * CREATE ONCE
+   ******************************************************/
+  const noPermohonan =
+    generateApplicationNumber();
+
+
+  const submissionId =
+    generateSubmissionId();
+
+
+  const data = {
+
+    noPermohonan:
+      noPermohonan,
+
+    submissionId:
+      submissionId,
+
+    nama:
+      document
+        .getElementById(
+          'nama'
+        )
+        .value
+        .trim(),
+
+    ic:
+      document
+        .getElementById(
+          'ic'
+        )
+        .value
+        .trim(),
+
+    telefon:
+      document
+        .getElementById(
+          'telefon'
+        )
+        .value
+        .trim(),
+
+    email:
+      document
+        .getElementById(
+          'email'
+        )
+        .value
+        .trim(),
+
+    alamat:
+      document
+        .getElementById(
+          'alamat'
+        )
+        .value
+        .trim(),
+
+    kategori:
+      document
+        .getElementById(
+          'kategori'
+        )
+        .value,
+
+    anak:
+      document
+        .getElementById(
+          'anak'
+        )
+        .value
+        .trim(),
+
+    sekolah:
+      document
+        .getElementById(
+          'sekolah'
+        )
+        .value
+        .trim(),
+
+    kategoriAnak:
+      document
+        .getElementById(
+          'kategoriAnak'
+        )
+        .value
+        .trim(),
+
+    jantina:
+      document
+        .getElementById(
+          'jantina'
+        )
+        .value,
+
+    tarikh:
+      document
+        .getElementById(
+          'tarikh'
+        )
+        .value
+
+  };
+
+
+  try {
+
+    await fetch(
+      GOOGLE_SCRIPT_URL,
+      {
+
+        method:
+          'POST',
+
+        mode:
+          'no-cors',
+
+        headers: {
+
+          'Content-Type':
+            'text/plain;charset=utf-8'
+
+        },
+
+        body:
+          JSON.stringify(
+            data
+          )
+
+      }
+    );
+
+
+    /****************************************************
+     * SUCCESS
+     ****************************************************/
+    messageBox.className =
+      'notice notice-success';
+
+
+    messageBox.innerHTML =
+
+      '<strong>✅ Pendaftaran berjaya dihantar!</strong>' +
+
+      '<br><br>' +
+
+      'No. Permohonan:' +
+
+      '<br><br>' +
+
+      '<strong style="font-size:22px">' +
+
+      escapeHtml(
+        noPermohonan
+      ) +
+
+      '</strong>' +
+
+      '<br><br>' +
+
+      'Sila simpan nombor ini untuk semakan status.';
+
+
+    document
+      .getElementById(
+        'statusNo'
+      )
+      .value =
+      noPermohonan;
+
+
+    /****************************************************
+     * CLEAR FORM
+     ****************************************************/
+    document
+      .getElementById(
+        'registrationForm'
+      )
+      .reset();
+
+
+    /****************************************************
+     * BUTTON LOCKED
+     ****************************************************/
+    button.disabled =
+      true;
+
+
+    button.innerText =
+      '✅ Pendaftaran Dihantar';
+
+
+  } catch (error) {
+
+    messageBox.className =
+      'notice notice-danger';
+
+
+    messageBox.innerHTML =
+      '❌ Pendaftaran gagal dihantar.<br><br>' +
+      escapeHtml(
+        error.message
+      );
+
+
+    isSubmitting =
+      false;
+
+
+    button.disabled =
+      false;
+
+
+    button.innerText =
+      '📩 Hantar Pendaftaran';
+
+  }
+
+}
+
+
+/************************************************************
+ * CHECK STATUS
+ ************************************************************/
+async function checkMemberStatus() {
+
+  const no =
+    document
+      .getElementById(
+        'statusNo'
+      )
+      .value
+      .trim()
+      .toUpperCase();
+
+
+  const message =
+    document
+      .getElementById(
+        'statusMessage'
+      );
+
+
+  const resultBox =
+    document
+      .getElementById(
+        'statusResult'
+      );
+
+
+  const button =
+    document
+      .getElementById(
+        'statusButton'
+      );
+
+
+  if (!no) {
+
+    message.className =
+      'notice notice-danger';
+
+
+    message.innerHTML =
+      'Sila masukkan No. Permohonan.';
+
+
+    return;
+
+  }
+
+
+  button.disabled =
+    true;
+
+
+  button.innerText =
+    '⏳ Menyemak...';
+
+
+  message.className =
+    'notice notice-warning';
+
+
+  message.innerHTML =
+    '⏳ Mendapatkan status terkini...';
+
+
+  resultBox.classList.add(
+    'hidden'
+  );
+
+
+  try {
+
+    const url =
+      GOOGLE_SCRIPT_URL +
+      '?action=check&no=' +
+      encodeURIComponent(
+        no
+      );
+
+
+    const result =
+      await jsonpRequest(
+        url
+      );
+
+
+    if (
+      !result.ok
+    ) {
+
+      throw new Error(
+        result.error ||
+        'Ralat server.'
+      );
+
+    }
+
+
+    if (
+      !result.found
+    ) {
+
+      message.className =
+        'notice notice-danger';
+
+
+      message.innerHTML =
+        '❌ No. Permohonan tidak dijumpai.';
+
+
+      return;
+
+    }
+
+
+    message.className =
+      'notice notice-success';
+
+
+    message.innerHTML =
+      '✅ Rekod dijumpai. Status adalah terkini.';
+
+
+    showStatus(
+      result.member
+    );
+
+
+  } catch (error) {
+
+    message.className =
+      'notice notice-danger';
+
+
+    message.innerHTML =
+      '❌ ' +
+      escapeHtml(
+        error.message
+      );
+
+  } finally {
+
+    button.disabled =
+      false;
+
+
+    button.innerText =
+      '🔎 Semak Status';
+
+  }
+
+}
+
+
+/************************************************************
+ * SHOW STATUS
+ ************************************************************/
+function showStatus(
+  member
+) {
+
+  const box =
+    document.getElementById(
+      'statusResult'
+    );
+
+
+  let statusClass =
+    'status-review';
+
+
+  let icon =
+    '⏳';
+
+
+  if (
+    member.status ===
+    'Diluluskan'
+  ) {
+
+    statusClass =
+      'status-approved';
+
+    icon =
+      '✅';
+
+  }
+
+
+  if (
+    member.status ===
+    'Ditolak'
+  ) {
+
+    statusClass =
+      'status-rejected';
+
+    icon =
+      '❌';
+
+  }
+
+
+  box.className =
+    'status-box ' +
+    statusClass;
+
+
+  box.innerHTML = `
+
+    <h3>
+      ${icon}
+      Status:
+      ${escapeHtml(
+        member.status
+      )}
+    </h3>
+
+    <p>
+      <strong>
+      No. Permohonan:
+      </strong>
+      <br>
+      ${escapeHtml(
+        member.noPermohonan
+      )}
+    </p>
+
+    <p>
+      <strong>
+      Nama:
+      </strong>
+      <br>
+      ${escapeHtml(
+        member.nama
+      )}
+    </p>
+
+    <p>
+      <strong>
+      Kategori:
+      </strong>
+      <br>
+      ${escapeHtml(
+        member.kategori
+      )}
+    </p>
+
+    ${
+      member.noKeahlian
+      ?
+      `
+      <p>
+        <strong>
+        No. Keahlian:
+        </strong>
+        <br>
+        ${escapeHtml(
+          member.noKeahlian
+        )}
+      </p>
+      `
+      :
+      ''
+    }
+
+    ${
+      member.tarikhDiluluskan
+      ?
+      `
+      <p>
+        <strong>
+        Tarikh Diluluskan:
+        </strong>
+        <br>
+        ${escapeHtml(
+          member.tarikhDiluluskan
+        )}
+      </p>
+      `
+      :
+      ''
+    }
+
+    ${
+      member.diluluskanOleh
+      ?
+      `
+      <p>
+        <strong>
+        Diproses Oleh:
+        </strong>
+        <br>
+        ${escapeHtml(
+          member.diluluskanOleh
+        )}
+      </p>
+      `
+      :
+      ''
+    }
+
+    ${
+      member.catatan
+      ?
+      `
+      <p>
+        <strong>
+        Catatan:
+        </strong>
+        <br>
+        ${escapeHtml(
+          member.catatan
+        )}
+      </p>
+      `
+      :
+      ''
+    }
+
+  `;
+
+
+  box.classList.remove(
+    'hidden'
+  );
+
+}
+
+
+/************************************************************
+ * ADMIN LOGIN
+ ************************************************************/
+async function adminLogin() {
+
+  const name =
+    document
+      .getElementById(
+        'adminName'
+      )
+      .value
+      .trim();
+
+
+  const key =
+    document
+      .getElementById(
+        'adminKey'
+      )
+      .value
+      .trim();
+
+
+  const message =
+    document
+      .getElementById(
+        'adminLoginMessage'
+      );
+
+
+  const button =
+    document
+      .getElementById(
+        'adminLoginButton'
+      );
+
+
+  if (
+    !name ||
+    !key
+  ) {
+
+    message.className =
+      'notice notice-danger';
+
+
+    message.innerHTML =
+      'Sila masukkan Nama Admin dan Admin Key.';
+
+
+    return;
+
+  }
+
+
+  button.disabled =
+    true;
+
+
+  button.innerText =
+    '⏳ Login...';
+
+
+  try {
+
+    const url =
+      GOOGLE_SCRIPT_URL +
+      '?action=members&key=' +
+      encodeURIComponent(
+        key
+      );
+
+
+    const result =
+      await jsonpRequest(
+        url
+      );
+
+
+    if (
+      !result.ok
+    ) {
+
+      throw new Error(
+        result.error ||
+        'Login gagal.'
+      );
+
+    }
+
+
+    sessionStorage.setItem(
+      'standhc_admin_name',
+      name
+    );
+
+
+    sessionStorage.setItem(
+      'standhc_admin_key',
+      key
+    );
+
+
+    document
+      .getElementById(
+        'adminLoginBox'
+      )
+      .classList.add(
+        'hidden'
+      );
+
+
+    document
+      .getElementById(
+        'adminPanel'
+      )
+      .classList.remove(
+        'hidden'
+      );
+
+
+    renderAdminMembers(
+      result.members || []
+    );
+
+
+  } catch (error) {
+
+    message.className =
+      'notice notice-danger';
+
+
+    message.innerHTML =
+      '❌ ' +
+      escapeHtml(
+        error.message
+      );
+
+  } finally {
+
+    button.disabled =
+      false;
+
+
+    button.innerText =
+      '🔐 Login Admin';
+
+  }
+
+}
+
+
+/************************************************************
+ * LOAD ADMIN
+ ************************************************************/
+async function loadAdminMembers() {
+
+  const key =
+    sessionStorage.getItem(
+      'standhc_admin_key'
+    );
+
+
+  if (!key) {
+
+    return;
+
+  }
+
+
+  const table =
+    document
+      .getElementById(
+        'adminTable'
+      );
+
+
+  table.innerHTML =
+    '<p>⏳ Memuatkan data...</p>';
+
+
+  try {
+
+    const url =
+      GOOGLE_SCRIPT_URL +
+      '?action=members&key=' +
+      encodeURIComponent(
+        key
+      );
+
+
+    const result =
+      await jsonpRequest(
+        url
+      );
+
+
+    if (
+      !result.ok
+    ) {
+
+      throw new Error(
+        result.error ||
+        'Gagal mendapatkan data.'
+      );
+
+    }
+
+
+    renderAdminMembers(
+      result.members || []
+    );
+
+
+  } catch (error) {
+
+    table.innerHTML =
+      '<div class="notice notice-danger">' +
+      escapeHtml(
+        error.message
+      ) +
+      '</div>';
+
+  }
+
+}
+
+
+/************************************************************
+ * RENDER ADMIN
+ ************************************************************/
+function renderAdminMembers(
+  members
+) {
+
+  const table =
+    document.getElementById(
+      'adminTable'
+    );
+
+
+  if (
+    !members.length
+  ) {
+
+    table.innerHTML =
+      '<p>Tiada pendaftaran.</p>';
+
+    return;
+
+  }
+
+
+  let html = `
+
+  <div class="table-wrap">
+
+  <table>
+
+  <thead>
+
+  <tr>
+
+  <th>
+  No.
+  </th>
+
+  <th>
+  No. Permohonan
+  </th>
+
+  <th>
+  Nama
+  </th>
+
+  <th>
+  Telefon
+  </th>
+
+  <th>
+  Kategori
+  </th>
+
+  <th>
+  Status
+  </th>
+
+  <th>
+  No. Keahlian
+  </th>
+
+  <th>
+  Tindakan
+  </th>
+
+  </tr>
+
+  </thead>
+
+  <tbody>
+
+  `;
+
+
+  members.forEach(
+    function(member) {
+
+      html += `
+
+      <tr>
+
+      <td>
+      ${member.row}
+      </td>
+
+      <td>
+      ${escapeHtml(
+        member.noPermohonan
+      )}
+      </td>
+
+      <td>
+      ${escapeHtml(
+        member.nama
+      )}
+      </td>
+
+      <td>
+      ${escapeHtml(
+        member.telefon || '-'
+      )}
+      </td>
+
+      <td>
+      ${escapeHtml(
+        member.kategori || '-'
+      )}
+      </td>
+
+      <td>
+      <strong>
+      ${escapeHtml(
+        member.status
+      )}
+      </strong>
+      </td>
+
+      <td>
+      ${
+        member.noKeahlian
+        ?
+        escapeHtml(
+          member.noKeahlian
+        )
+        :
+        '-'
+      }
+      </td>
+
+      <td>
+      `;
+
+
+      /****************************************************
+       * DALAM SEMAKAN
+       ****************************************************/
+      if (
+        member.status ===
+        'Dalam Semakan'
+      ) {
+
+        html += `
+
+        <button
+        class="btn btn-success"
+        onclick="approveMember(${member.row})">
+
+        ✅ Lulus
+
+        </button>
+
+        <button
+        class="btn btn-danger"
+        onclick="rejectMember(${member.row})">
+
+        ❌ Tolak
+
+        </button>
+
+        `;
+
+      }
+
+
+      /****************************************************
+       * WHATSAPP
+       *
+       * HANYA SELEPAS PROSES STATUS
+       ****************************************************/
+      if (
+        (
+          member.status ===
+          'Diluluskan' ||
+          member.status ===
+          'Ditolak'
+        )
+      ) {
+
+        if (
+          member.telefon
+        ) {
+
+          html += `
+
+          <button
+          id="wa-${member.row}"
+          class="btn btn-whatsapp"
+          onclick="sendStatusWhatsApp(${member.row})">
+
+          📱 Hantar Status WhatsApp
+
+          </button>
+
+          `;
+
+        } else {
+
+          html += `
+
+          <div
+          class="notice notice-warning">
+
+          ⚠️ No. telefon tiada
+
+          </div>
+
+          `;
+
+        }
+
+      }
+
+
+      html += `
+
+      </td>
+
+      </tr>
+
+      `;
+
+    }
+  );
+
+
+  html += `
+
+  </tbody>
+
+  </table>
+
+  </div>
+
+  `;
+
+
+  table.innerHTML =
+    html;
+
+}
+
+
+/************************************************************
+ * APPROVE
+ ************************************************************/
+function approveMember(
+  row
+) {
+
+  const note =
+    prompt(
+      'Catatan kelulusan (optional):',
+      ''
+    );
+
+
+  if (
+    note === null
+  ) {
+
+    return;
+
+  }
+
+
+  updateStatus(
+    row,
+    'Diluluskan',
+    note
+  );
+
+}
+
+
+/************************************************************
+ * REJECT
+ ************************************************************/
+function rejectMember(
+  row
+) {
+
+  const reason =
+    prompt(
+      'Sebab permohonan ditolak:',
+      ''
+    );
+
+
+  if (
+    reason === null
+  ) {
+
+    return;
+
+  }
+
+
+  updateStatus(
+    row,
+    'Ditolak',
+    reason
+  );
+
+}
+
+
+/************************************************************
+ * UPDATE STATUS
+ ************************************************************/
+async function updateStatus(
+  row,
+  status,
+  catatan
+) {
+
+  const key =
+    sessionStorage.getItem(
+      'standhc_admin_key'
+    );
+
+
+  const adminName =
+    sessionStorage.getItem(
+      'standhc_admin_name'
+    ) ||
+    'Admin STAND HC';
+
+
+  if (!key) {
+
+    alert(
+      'Sesi Admin telah tamat. Sila login semula.'
+    );
+
+    return;
+
+  }
+
+
+  const data = {
+
+    action:
+      'updateStatus',
+
+    row:
+      row,
+
+    status:
+      status,
+
+    adminName:
+      adminName,
+
+    adminKey:
+      key,
+
+    catatan:
+      catatan || ''
+
+  };
+
+
+  try {
+
+    await fetch(
+      GOOGLE_SCRIPT_URL,
+      {
+
+        method:
+          'POST',
+
+        mode:
+          'no-cors',
+
+        headers: {
+
+          'Content-Type':
+            'text/plain;charset=utf-8'
+
+        },
+
+        body:
+          JSON.stringify(
+            data
+          )
+
+      }
+    );
+
+
+    if (
+      status ===
+      'Diluluskan'
+    ) {
+
+      alert(
+        '✅ Pendaftaran telah DILULUSKAN.\n\n' +
+        'No. Keahlian telah dijana.\n\n' +
+        'Selepas refresh, butang WhatsApp akan tersedia.'
+      );
+
+    } else {
+
+      alert(
+        '❌ Pendaftaran telah DITOLAK.'
+      );
+
+    }
+
+
+    await loadAdminMembers();
+
+
+  } catch (error) {
+
+    alert(
+      '❌ Ralat: ' +
+      error.message
+    );
+
+  }
+
+}
+
+
+/************************************************************
+ * NORMALIZE PHONE
+ ************************************************************/
+function normalizeMalaysiaPhone(
+  phone
+) {
+
+  let value =
+    String(
+      phone || ''
+    )
+    .trim();
+
+
+  /******************************************************
+   * BUANG SPACE / DASH / BRACKET
+   ******************************************************/
+  value =
+    value.replace(
+      /[\s\-().]/g,
+      ''
+    );
+
+
+  /******************************************************
+   * +60123456789
+   * ->
+   * 60123456789
+   ******************************************************/
+  if (
+    value.startsWith(
+      '+60'
+    )
+  ) {
+
+    value =
+      value.substring(1);
+
+  }
+
+
+  /******************************************************
+   * 0123456789
+   * ->
+   * 60123456789
+   ******************************************************/
+  else if (
+    value.startsWith('0')
+  ) {
+
+    value =
+      '60' +
+      value.substring(1);
+
+  }
+
+
+  /******************************************************
+   * 123456789
+   * ->
+   * 60123456789
+   ******************************************************/
+  else if (
+    value.startsWith('1')
+  ) {
+
+    value =
+      '60' +
+      value;
+
+  }
+
+
+  /******************************************************
+   * DIGIT ONLY
+   ******************************************************/
+  value =
+    value.replace(
+      /\D/g,
+      ''
+    );
+
+
+  /******************************************************
+   * MALAYSIA MOBILE VALIDATION
+   *
    * 601XXXXXXXX
-   * atau
    * 601XXXXXXXXX
-   */
-  if (!/^601\d{8,9}$/.test(value)) {
+   ******************************************************/
+  if (
+    !/^601\d{8,9}$/.test(
+      value
+    )
+  ) {
 
     return {
-      valid: false,
-      phone: value,
-      message:
-        'No. telefon tidak sah. Sila semak nombor telefon ahli dalam Google Sheets.'
+
+      valid:
+        false,
+
+      phone:
+        value
+
     };
 
   }
 
+
   return {
-    valid: true,
-    phone: value,
-    message: ''
+
+    valid:
+      true,
+
+    phone:
+      value
+
   };
 
 }
 
 
 /************************************************************
- * HANTAR STATUS WHATSAPP
+ * SEND WHATSAPP
  ************************************************************/
-async function sendStatusWhatsApp(row) {
+async function sendStatusWhatsApp(
+  row
+) {
 
   const button =
     document.getElementById(
       'wa-' + row
     );
 
+
   if (button) {
 
-    button.disabled = true;
+    button.disabled =
+      true;
 
     button.innerText =
       '⏳ Semak nombor...';
 
   }
+
 
   try {
 
@@ -77,6 +2970,7 @@ async function sendStatusWhatsApp(row) {
       sessionStorage.getItem(
         'standhc_admin_key'
       );
+
 
     if (!key) {
 
@@ -88,19 +2982,25 @@ async function sendStatusWhatsApp(row) {
 
 
     /******************************************************
-     * AMBIL DATA TERKINI DARIPADA GOOGLE SHEETS
+     * GET LATEST DATA
      ******************************************************/
     const url =
       GOOGLE_SCRIPT_URL +
       '?action=members&key=' +
-      encodeURIComponent(key);
+      encodeURIComponent(
+        key
+      );
 
 
     const result =
-      await jsonpRequest(url);
+      await jsonpRequest(
+        url
+      );
 
 
-    if (!result.ok) {
+    if (
+      !result.ok
+    ) {
 
       throw new Error(
         result.error ||
@@ -111,14 +3011,20 @@ async function sendStatusWhatsApp(row) {
 
 
     /******************************************************
-     * CARI AHLI
+     * FIND MEMBER
      ******************************************************/
     const member =
-      (result.members || []).find(
+      (
+        result.members || []
+      ).find(
         function(item) {
 
-          return Number(item.row) ===
-                 Number(row);
+          return (
+            Number(
+              item.row
+            ) ===
+            Number(row)
+          );
 
         }
       );
@@ -134,24 +3040,28 @@ async function sendStatusWhatsApp(row) {
 
 
     /******************************************************
-     * SEMAK STATUS
+     * CHECK STATUS
      ******************************************************/
     if (
-      member.status !== 'Diluluskan' &&
-      member.status !== 'Ditolak'
+      member.status !==
+      'Diluluskan' &&
+      member.status !==
+      'Ditolak'
     ) {
 
       throw new Error(
-        'WhatsApp hanya boleh dihantar selepas status Diluluskan atau Ditolak.'
+        'Status masih belum diproses.'
       );
 
     }
 
 
     /******************************************************
-     * SEMAK NOMBOR TELEFON
+     * CHECK PHONE
      ******************************************************/
-    if (!member.telefon) {
+    if (
+      !member.telefon
+    ) {
 
       throw new Error(
         'No. telefon ahli tiada dalam rekod.'
@@ -160,18 +3070,29 @@ async function sendStatusWhatsApp(row) {
     }
 
 
+    /******************************************************
+     * FORMAT PHONE
+     ******************************************************/
     const phoneResult =
-      formatMalaysiaPhone(
+      normalizeMalaysiaPhone(
         member.telefon
       );
 
 
-    if (!phoneResult.valid) {
+    if (
+      !phoneResult.valid
+    ) {
 
       throw new Error(
+
         'No. telefon "' +
         member.telefon +
-        '" tidak sah. Contoh nombor yang betul: 0123456789'
+        '" tidak sah.\n\n' +
+
+        'Contoh nombor yang betul:\n' +
+        '0123456789\n' +
+        '+60123456789'
+
       );
 
     }
@@ -182,16 +3103,18 @@ async function sendStatusWhatsApp(row) {
 
 
     /******************************************************
-     * BINA MESEJ
+     * MESSAGE
      ******************************************************/
-    let message = '';
+    let message =
+      '';
 
 
     /******************************************************
-     * DILULUSKAN
+     * APPROVED
      ******************************************************/
     if (
-      member.status === 'Diluluskan'
+      member.status ===
+      'Diluluskan'
     ) {
 
       message =
@@ -224,14 +3147,14 @@ Terima kasih kerana menjadi ahli STAND Handball Club.
 
 
     /******************************************************
-     * DITOLAK
+     * REJECTED
      ******************************************************/
     else {
 
       message =
 `🤾‍♂️ STAND HANDBALL CLUB (STAND HC)
 
-Assalamualaikum.
+Assalamualaikum dan Selamat Sejahtera.
 
 Makluman mengenai permohonan keahlian STAND HC.
 
@@ -257,7 +3180,7 @@ Terima kasih.
 
 
     /******************************************************
-     * BUKA WHATSAPP
+     * WHATSAPP URL
      ******************************************************/
     const whatsappUrl =
       'https://wa.me/' +
@@ -268,6 +3191,9 @@ Terima kasih.
       );
 
 
+    /******************************************************
+     * OPEN WHATSAPP
+     ******************************************************/
     window.open(
       whatsappUrl,
       '_blank'
@@ -275,11 +3201,12 @@ Terima kasih.
 
 
     /******************************************************
-     * BUTTON
+     * BUTTON ONCE
      ******************************************************/
     if (button) {
 
-      button.disabled = true;
+      button.disabled =
+        true;
 
       button.innerText =
         '✅ WhatsApp Dibuka';
@@ -291,7 +3218,8 @@ Terima kasih.
 
     if (button) {
 
-      button.disabled = false;
+      button.disabled =
+        false;
 
       button.innerText =
         '📱 Hantar Status WhatsApp';
@@ -307,3 +3235,263 @@ Terima kasih.
   }
 
 }
+
+
+/************************************************************
+ * ADMIN LOGOUT
+ ************************************************************/
+function adminLogout() {
+
+  sessionStorage.removeItem(
+    'standhc_admin_name'
+  );
+
+
+  sessionStorage.removeItem(
+    'standhc_admin_key'
+  );
+
+
+  document
+    .getElementById(
+      'adminLoginBox'
+    )
+    .classList.remove(
+      'hidden'
+    );
+
+
+  document
+    .getElementById(
+      'adminPanel'
+    )
+    .classList.add(
+      'hidden'
+    );
+
+}
+
+
+/************************************************************
+ * COPY SHARE LINK
+ ************************************************************/
+function copyShareLink() {
+
+  const url =
+    window.location.origin +
+    window.location.pathname;
+
+
+  navigator
+    .clipboard
+    .writeText(
+      url
+    )
+    .then(
+      function() {
+
+        const message =
+          document
+            .getElementById(
+              'shareMessage'
+            );
+
+
+        message.classList.remove(
+          'hidden'
+        );
+
+
+        setTimeout(
+          function() {
+
+            message.classList.add(
+              'hidden'
+            );
+
+          },
+          3000
+        );
+
+      }
+    );
+
+}
+
+
+/************************************************************
+ * SHARE WHATSAPP
+ ************************************************************/
+function shareWhatsApp() {
+
+  const url =
+    window.location.origin +
+    window.location.pathname;
+
+
+  const message =
+`🤾‍♂️ STAND HANDBALL CLUB (STAND HC)
+
+Pendaftaran Keahlian STAND HC
+
+Sila daftar melalui link rasmi:
+
+${url}
+
+Terima kasih.`;
+
+
+  window.open(
+
+    'https://wa.me/?text=' +
+    encodeURIComponent(
+      message
+    ),
+
+    '_blank'
+
+  );
+
+}
+
+
+/************************************************************
+ * ESCAPE HTML
+ ************************************************************/
+function escapeHtml(
+  value
+) {
+
+  return String(
+    value || ''
+  )
+  .replace(
+    /&/g,
+    '&amp;'
+  )
+  .replace(
+    /</g,
+    '&lt;'
+  )
+  .replace(
+    />/g,
+    '&gt;'
+  )
+  .replace(
+    /"/g,
+    '&quot;'
+  )
+  .replace(
+    /'/g,
+    '&#039;'
+  );
+
+}
+
+
+/************************************************************
+ * DEFAULT DATE
+ ************************************************************/
+(function() {
+
+  const dateInput =
+    document.getElementById(
+      'tarikh'
+    );
+
+
+  if (
+    dateInput
+  ) {
+
+    const today =
+      new Date();
+
+
+    const yyyy =
+      today.getFullYear();
+
+
+    const mm =
+      String(
+        today.getMonth() + 1
+      )
+      .padStart(
+        2,
+        '0'
+      );
+
+
+    const dd =
+      String(
+        today.getDate()
+      )
+      .padStart(
+        2,
+        '0'
+      );
+
+
+    dateInput.value =
+      yyyy +
+      '-' +
+      mm +
+      '-' +
+      dd;
+
+  }
+
+})();
+
+
+/************************************************************
+ * RESTORE ADMIN SESSION
+ ************************************************************/
+(function() {
+
+  const adminName =
+    sessionStorage.getItem(
+      'standhc_admin_name'
+    );
+
+
+  const adminKey =
+    sessionStorage.getItem(
+      'standhc_admin_key'
+    );
+
+
+  if (
+    adminName &&
+    adminKey
+  ) {
+
+    document
+      .getElementById(
+        'adminLoginBox'
+      )
+      .classList.add(
+        'hidden'
+      );
+
+
+    document
+      .getElementById(
+        'adminPanel'
+      )
+      .classList.remove(
+        'hidden'
+      );
+
+
+    loadAdminMembers();
+
+  }
+
+})();
+
+</script>
+
+</body>
+
+</html>
